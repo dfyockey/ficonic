@@ -32,17 +32,19 @@
 #include <cstdio>
 #include <map>
 #include <sstream>
+#include <fstream>
 
 #include <curl/curl.h>
 
 using std::string;
 using std::ostringstream;
+using std::ofstream;
 
 const int null = 0;
 
 typedef std::multimap<CURLoption,string> fieldsmap;
 
-// Curler : Manages pulling resources from URLs using the libcurl Easy interface
+// Curler : Manages pulling resources down from the Internet using the libcurl Easy interface
 
 class Curler {
 private:
@@ -54,11 +56,16 @@ private:
 
 	static size_t write_callback(char* data, size_t size, size_t nmemb, void* userdata);
 
+	ostringstream pull(string url);
+
 public:
 	Curler(fieldsmap* fields=0);	// key-value pairs passed to the constructor in the fieldsmap
 									// are persistently stored in the CURL object
 
-	ostringstream pull(string url);
+	void pull(string url, string& rstr);
+	void pull(string url, ostringstream& ross);
+	void pull(string url, ofstream& rofs);
+
 
 	virtual ~Curler();				// curl_easy_cleanup is executed in the dtor,
 									// so the user doesn't need to remember to call it

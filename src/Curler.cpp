@@ -76,18 +76,6 @@ size_t Curler::write_callback(char* data, size_t size, size_t nmemb, void* userd
 	return datasize;
 }
 
-///// public /////////////////////////////////////////////////////////
-
-Curler::Curler(fieldsmap* fields) {
-	if ( !(curl = curl_easy_init()) )
-		throw std::runtime_error("curl_easy_init() failed");
-
-	customHeaders = 0;
-
-	if (fields)
-		setHttpHeaderFields(*fields);
-}
-
 ostringstream Curler::pull(string url) {
 	CURLcode res;
 	ostringstream ossCurlResponse;
@@ -105,6 +93,31 @@ ostringstream Curler::pull(string url) {
 
 	// Return a string containing the retrieved data requested or an empty string
     return ossCurlResponse;
+}
+
+///// public /////////////////////////////////////////////////////////
+
+Curler::Curler(fieldsmap* fields) {
+	if ( !(curl = curl_easy_init()) )
+		throw std::runtime_error("curl_easy_init() failed");
+
+	customHeaders = 0;
+
+	if (fields)
+		setHttpHeaderFields(*fields);
+}
+
+void Curler::pull(string url, string& rstr) {
+	rstr = pull(url).str();
+}
+
+void Curler::pull(string url, ostringstream& ross) {
+	ross = pull(url);
+}
+
+void Curler::pull(string url, ofstream& rofs) {
+	string pulled = pull(url).str();
+	rofs.write(pulled.c_str(), pulled.length());
 }
 
 Curler::~Curler() {

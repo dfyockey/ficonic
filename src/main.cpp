@@ -33,9 +33,8 @@ int main(void) {
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, "FaviconGofer"} };
 	Curler curl(&httpHeaderFields);
 
-	ostringstream ossFavicon = curl.pull("https://en.wikipedia.org/favicon.ico");
-	ofstream ofFavicon("favicon.ico", ios::binary);
-	ofFavicon.write(ossFavicon.str().c_str(), ossFavicon.str().length());
+	ofstream ofFavicon("/home/David/tmp/favicon.ico", ios::binary);
+	curl.pull("https://github.com/favicon.ico", ofFavicon);
 
 	return 0;
 }
