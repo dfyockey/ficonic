@@ -24,17 +24,59 @@
  * SOFTWARE.
  */
 
-#include "Curler.h"
+#include <iostream>
+#include <string>
 #include <fstream>
+#include <boost/program_options.hpp>
 
-using namespace std;
+#include "Curler.h"
 
-int main(void) {
+using std::string;
+
+namespace bpo = boost::program_options;
+
+bpo::options_description initDescription() {
+	bpo::options_description desc("Utility for retrieving a favicon for a given URL");
+	desc.add_options()
+		( "help,h", "Generate help message." )
+		( "url,u", bpo::value<string>(), "URL from which to retrieve favicon.")
+	;
+	return desc;
+}
+
+bpo::variables_map initVariablesMap(int argc, char* argv[], bpo::options_description& desc) {
+	bpo::variables_map vm;
+	bpo::store(bpo::parse_command_line(argc, argv, desc), vm);
+	bpo::notify(vm);
+	return vm;
+}
+
+int execMain(bpo::variables_map& vm) {
+	string url;
+
+	if (vm.count("url")) {
+		url = vm["url"].as<string>();
+	} else {
+		std::cerr << "Error: A URL is required." << std::endl;
+		return 2;
+	}
+
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, "FaviconGofer"} };
 	Curler curl(&httpHeaderFields);
 
-	ofstream ofFavicon("/home/David/tmp/favicon.ico", ios::binary);
-	curl.pull("https://github.com/favicon.ico", ofFavicon);
-
+	std::ofstream ofFavicon("/home/David/tmp/favicon.ico", std::ios::binary);
+	curl.pull( url + "/favicon.ico", ofFavicon );
 	return 0;
+}
+
+int main(int argc, char* argv[]) {
+	bpo::options_description desc = initDescription();
+	bpo::variables_map       vm   = initVariablesMap(argc, argv, desc);
+
+	if (vm.count("help")) {
+	    std::cout << desc << "\n";
+	    return 1;
+	}
+
+	return execMain(vm);
 }

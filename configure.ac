@@ -12,7 +12,11 @@ AC_PROG_CXX
 AC_PROG_CC
 
 # Checks for libraries.
+AX_BOOST_BASE([1.32.0], [], [version 1.32.0 or better of the Boost C++ libraries is required.])
+AX_BOOST_PROGRAM_OPTIONS
 AC_SEARCH_LIBS(curl_version_info, curl, [])
+
+LIBS="$BOOST_PROGRAM_OPTIONS_LIB $LIBS"
 
 # Checks for header files.
 
