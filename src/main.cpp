@@ -27,19 +27,26 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <filesystem>
+#include <exception>
+
 #include <boost/program_options.hpp>
 
 #include "Curler.h"
 
 using std::string;
 
+namespace fs = std::filesystem;
 namespace bpo = boost::program_options;
+
+
 
 bpo::options_description initDescription() {
 	bpo::options_description desc("Utility for retrieving a favicon for a given URL");
 	desc.add_options()
 		( "help,h", "Generate help message." )
-		( "url,u", bpo::value<string>(), "URL from which to retrieve favicon.")
+		( "url,u", bpo::value<string>()->required(), "URL from which to retrieve favicon.")
+		( "dir,d", bpo::value<fs::path>()->default_value(fs::temp_directory_path()), "Directory to which favicon will be saved." )
 	;
 	return desc;
 }
@@ -47,25 +54,33 @@ bpo::options_description initDescription() {
 bpo::variables_map initVariablesMap(int argc, char* argv[], bpo::options_description& desc) {
 	bpo::variables_map vm;
 	bpo::store(bpo::parse_command_line(argc, argv, desc), vm);
-	bpo::notify(vm);
 	return vm;
+}
+
+void vmProc (bpo::variables_map& vm, string& url, fs::path& dir ) {
+	if (vm.count("url")) {
+		url = vm["url"].as<string>();
+		if ( url.back() != '/') {
+			url += "/";
+		}
+	}
+
+	if (vm.count("dir")) {
+		dir = vm["dir"].as<fs::path>();
+	}
 }
 
 int execMain(bpo::variables_map& vm) {
 	string url;
+	fs::path dir;
 
-	if (vm.count("url")) {
-		url = vm["url"].as<string>();
-	} else {
-		std::cerr << "Error: A URL is required." << std::endl;
-		return 2;
-	}
+	vmProc (vm, url, dir);
 
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, "FaviconGofer"} };
 	Curler curl(&httpHeaderFields);
 
-	std::ofstream ofFavicon("/home/David/tmp/favicon.ico", std::ios::binary);
-	curl.pull( url + "/favicon.ico", ofFavicon );
+	std::ofstream ofFavicon( dir/"favicon.ico", std::ios::binary );
+	curl.pull( url + "favicon.ico", ofFavicon );
 	return 0;
 }
 
@@ -77,6 +92,8 @@ int main(int argc, char* argv[]) {
 	    std::cout << desc << "\n";
 	    return 1;
 	}
+
+	bpo::notify(vm);
 
 	return execMain(vm);
 }
