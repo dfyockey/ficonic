@@ -39,7 +39,7 @@ using std::string;
 namespace fs = std::filesystem;
 namespace bpo = boost::program_options;
 
-
+///// Initialization and Processing of Program Options ///////////////
 
 bpo::options_description initDescription() {
 	bpo::options_description desc("Utility for retrieving a favicon for a given URL");
@@ -57,7 +57,7 @@ bpo::variables_map initVariablesMap(int argc, char* argv[], bpo::options_descrip
 	return vm;
 }
 
-void vmProc (bpo::variables_map& vm, string& url, fs::path& dir ) {
+void parseVariablesMap (bpo::variables_map& vm, string& url, fs::path& dir ) {
 	if (vm.count("url")) {
 		url = vm["url"].as<string>();
 		if ( url.back() != '/') {
@@ -70,11 +70,13 @@ void vmProc (bpo::variables_map& vm, string& url, fs::path& dir ) {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////
+
 int execMain(bpo::variables_map& vm) {
 	string url;
 	fs::path dir;
 
-	vmProc (vm, url, dir);
+	parseVariablesMap (vm, url, dir);
 
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, "FaviconGofer"} };
 	Curler curl(&httpHeaderFields);
