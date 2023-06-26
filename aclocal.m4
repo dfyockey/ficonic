@@ -33,9 +33,9 @@ To do so, use the procedure documented by the package, typically 'autoreconf'.])
 #   Test for the Boost C++ libraries of a particular version (or newer)
 #
 #   If no path to the installed boost library is given the macro searchs
-#   under /usr, /usr/local, /opt and /opt/local and evaluates the
-#   $BOOST_ROOT environment variable. Further documentation is available at
-#   <http://randspringer.de/boost/index.html>.
+#   under /usr, /usr/local, /opt, /opt/local and /opt/homebrew and evaluates
+#   the $BOOST_ROOT environment variable. Further documentation is available
+#   at <http://randspringer.de/boost/index.html>.
 #
 #   This macro calls:
 #
@@ -55,7 +55,7 @@ To do so, use the procedure documented by the package, typically 'autoreconf'.])
 #   and this notice are preserved. This file is offered as-is, without any
 #   warranty.
 
-#serial 49
+#serial 51
 
 # example boost program (need to pass version)
 m4_define([_AX_BOOST_BASE_PROGRAM],
@@ -150,7 +150,7 @@ AC_DEFUN([_AX_BOOST_BASE_RUNDETECT],[
     )
 
     dnl first we check the system location for boost libraries
-    dnl this location ist chosen if boost libraries are installed with the --layout=system option
+    dnl this location is chosen if boost libraries are installed with the --layout=system option
     dnl or if you install boost with RPM
     AS_IF([test "x$_AX_BOOST_BASE_boost_path" != "x"],[
         AC_MSG_CHECKING([for boostlib >= $1 ($WANT_BOOST_VERSION) includes in "$_AX_BOOST_BASE_boost_path/include"])
@@ -173,7 +173,7 @@ AC_DEFUN([_AX_BOOST_BASE_RUNDETECT],[
         else
             search_libsubdirs="$multiarch_libsubdir $libsubdirs"
         fi
-        for _AX_BOOST_BASE_boost_path_tmp in /usr /usr/local /opt /opt/local ; do
+        for _AX_BOOST_BASE_boost_path_tmp in /usr /usr/local /opt /opt/local /opt/homebrew ; do
             if test -d "$_AX_BOOST_BASE_boost_path_tmp/include/boost" && test -r "$_AX_BOOST_BASE_boost_path_tmp/include/boost" ; then
                 for libsubdir in $search_libsubdirs ; do
                     if ls "$_AX_BOOST_BASE_boost_path_tmp/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
@@ -249,7 +249,7 @@ AC_DEFUN([_AX_BOOST_BASE_RUNDETECT],[
             fi
         else
             if test "x$cross_compiling" != "xyes" ; then
-                for _AX_BOOST_BASE_boost_path in /usr /usr/local /opt /opt/local ; do
+                for _AX_BOOST_BASE_boost_path in /usr /usr/local /opt /opt/local /opt/homebrew ; do
                     if test -d "$_AX_BOOST_BASE_boost_path" && test -r "$_AX_BOOST_BASE_boost_path" ; then
                         for i in `ls -d $_AX_BOOST_BASE_boost_path/include/boost-* 2>/dev/null`; do
                             _version_tmp=`echo $i | sed "s#$_AX_BOOST_BASE_boost_path##" | sed 's/\/include\/boost-//' | sed 's/_/./'`

@@ -34,6 +34,13 @@
 
 #include "Curler.h"
 
+#include <Magick++.h>
+#include "RootIconsRetriever.hpp"
+#include "program_info.h"
+#include "ficon.hpp"
+
+using namespace Magick;
+
 using std::string;
 
 namespace fs = std::filesystem;
@@ -42,11 +49,11 @@ namespace bpo = boost::program_options;
 ///// Initialization and Processing of Program Options ///////////////
 
 bpo::options_description initDescription() {
-	bpo::options_description desc("Utility for retrieving a favicon for a given URL");
+	bpo::options_description desc("Utility for retrieving favicons for a given URL");
 	desc.add_options()
 		( "help,h", "Generate help message." )
-		( "url,u", bpo::value<string>()->required(), "URL from which to retrieve favicon.")
-		( "dir,d", bpo::value<fs::path>()->default_value(fs::temp_directory_path()), "Directory to which favicon will be saved." )
+		( "url,u", bpo::value<string>()->required(), "URL from which to retrieve favicons.")
+		( "dir,d", bpo::value<fs::path>()->default_value(fs::temp_directory_path()), "Directory to which to save favicons." )
 	;
 	return desc;
 }
@@ -72,17 +79,23 @@ void parseVariablesMap (bpo::variables_map& vm, string& url, fs::path& dir ) {
 
 //////////////////////////////////////////////////////////////////////
 
-int execMain(bpo::variables_map& vm) {
+int execMain (bpo::variables_map& vm) {
 	string url;
 	fs::path dir;
 
 	parseVariablesMap (vm, url, dir);
 
-	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, "FaviconGofer"} };
-	Curler curl(&httpHeaderFields);
+	ficonic::ficonvector ficons;
+	RootIconsRetriever rooticonsRetriever;
+	rooticonsRetriever.pull(url, ficons);
 
-	std::ofstream ofFavicon( dir/"favicon.ico", std::ios::binary );
-	curl.pull( url + "favicon.ico", ofFavicon );
+	unsigned int index = 1;
+	for (auto& ficon : ficons) {
+		Image image(ficon.data);
+		string favicon = dir/"favicon";
+		image.write(favicon + std::to_string(index++) + "." + image.magick());
+	}
+
 	return 0;
 }
 

@@ -105,9 +105,14 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FaviconGofer_OBJECTS = src/Curler.$(OBJEXT) src/main.$(OBJEXT)
+am_FaviconGofer_OBJECTS = src/FaviconGofer-Curler.$(OBJEXT) \
+	src/FaviconGofer-main.$(OBJEXT) \
+	src/FaviconGofer-ficon.$(OBJEXT) \
+	src/FaviconGofer-RootIconsRetriever.$(OBJEXT)
 FaviconGofer_OBJECTS = $(am_FaviconGofer_OBJECTS)
 FaviconGofer_LDADD = $(LDADD)
+FaviconGofer_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
+	$(FaviconGofer_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -123,8 +128,15 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = src/$(DEPDIR)/Curler.Po src/$(DEPDIR)/main.Po
+am__depfiles_remade = src/$(DEPDIR)/FaviconGofer-Curler.Po \
+	src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po \
+	src/$(DEPDIR)/FaviconGofer-ficon.Po \
+	src/$(DEPDIR)/FaviconGofer-main.Po
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 AM_V_CXX = $(am__v_CXX_@AM_V@)
@@ -305,8 +317,15 @@ AUTOMAKE_OPTIONS = subdir-objects
 FaviconGofer_SOURCES = \
 	src/Curler.cpp \
 	src/Curler.h \
-	src/main.cpp
+	src/main.cpp \
+	src/ficon.cpp \
+	src/ficon.hpp \
+	src/program_info.h \
+	src/RootIconsRetriever.cpp \
+	src/RootIconsRetriever.hpp
 
+FaviconGofer_CPPFLAGS = -I/usr/include/ImageMagick-6
+FaviconGofer_LDFLAGS = `Magick++-config --cppflags --cxxflags --ldflags --libs`
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
@@ -408,13 +427,18 @@ src/$(am__dirstamp):
 src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/Curler.$(OBJEXT): src/$(am__dirstamp) \
+src/FaviconGofer-Curler.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/main.$(OBJEXT): src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+src/FaviconGofer-main.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/FaviconGofer-ficon.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/FaviconGofer-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 
 FaviconGofer$(EXEEXT): $(FaviconGofer_OBJECTS) $(FaviconGofer_DEPENDENCIES) $(EXTRA_FaviconGofer_DEPENDENCIES) 
 	@rm -f FaviconGofer$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(FaviconGofer_OBJECTS) $(FaviconGofer_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(FaviconGofer_LINK) $(FaviconGofer_OBJECTS) $(FaviconGofer_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -423,8 +447,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/Curler.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-Curler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-ficon.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-main.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -447,6 +473,62 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+src/FaviconGofer-Curler.o: src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-Curler.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-Curler.Tpo -c -o src/FaviconGofer-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-Curler.Tpo src/$(DEPDIR)/FaviconGofer-Curler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/FaviconGofer-Curler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
+
+src/FaviconGofer-Curler.obj: src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-Curler.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-Curler.Tpo -c -o src/FaviconGofer-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-Curler.Tpo src/$(DEPDIR)/FaviconGofer-Curler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/FaviconGofer-Curler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
+
+src/FaviconGofer-main.o: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-main.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-main.Tpo -c -o src/FaviconGofer-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-main.Tpo src/$(DEPDIR)/FaviconGofer-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/FaviconGofer-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
+
+src/FaviconGofer-main.obj: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-main.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-main.Tpo -c -o src/FaviconGofer-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-main.Tpo src/$(DEPDIR)/FaviconGofer-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/FaviconGofer-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
+
+src/FaviconGofer-ficon.o: src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-ficon.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-ficon.Tpo -c -o src/FaviconGofer-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-ficon.Tpo src/$(DEPDIR)/FaviconGofer-ficon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/FaviconGofer-ficon.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
+
+src/FaviconGofer-ficon.obj: src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-ficon.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-ficon.Tpo -c -o src/FaviconGofer-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-ficon.Tpo src/$(DEPDIR)/FaviconGofer-ficon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/FaviconGofer-ficon.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
+
+src/FaviconGofer-RootIconsRetriever.o: src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-RootIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo -c -o src/FaviconGofer-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/FaviconGofer-RootIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
+
+src/FaviconGofer-RootIconsRetriever.obj: src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-RootIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo -c -o src/FaviconGofer-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/FaviconGofer-RootIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -723,8 +805,10 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f src/$(DEPDIR)/Curler.Po
-	-rm -f src/$(DEPDIR)/main.Po
+		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-main.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -772,8 +856,10 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f src/$(DEPDIR)/Curler.Po
-	-rm -f src/$(DEPDIR)/main.Po
+		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-main.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

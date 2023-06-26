@@ -41,6 +41,8 @@ void Curler::setCurlOptions(CURL* curl, string url, ostringstream& ossCurlRespon
 		if( (res = curl_easy_setopt( curl, CURLOPT_URL, url.c_str() )) != CURLE_OK ) break;
 		if( (res = curl_easy_setopt( curl, CURLOPT_WRITEFUNCTION, write_callback )) != CURLE_OK ) break;
 		if( (res = curl_easy_setopt( curl, CURLOPT_WRITEDATA, reinterpret_cast<void*>(&ossCurlResponse) )) != CURLE_OK ) break;
+		if( (res = curl_easy_setopt( curl, CURLOPT_FOLLOWLOCATION, 1L )) != CURLE_OK ) break;
+		if( (res = curl_easy_setopt( curl, CURLOPT_MAXREDIRS, 3L )) != CURLE_OK ) break;
 	} while (false);
 
 	if ( res != CURLE_OK )
