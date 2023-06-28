@@ -10,9 +10,14 @@ FaviconGofer_SOURCES = \
 	src/ficon.hpp \
 	src/program_info.h \
 	src/RootIconsRetriever.cpp \
-	src/RootIconsRetriever.hpp
+	src/RootIconsRetriever.hpp \
+	src/LinkIconsRetriever.cpp \
+	src/LinkIconsRetriever.hpp
 	
-FaviconGofer_CPPFLAGS =	-I/usr/include/ImageMagick-6
+FaviconGofer_CPPFLAGS =	\
+	-I/usr/include/ImageMagick-6 \
+	-I/usr/include/htmlcxx/html
 
-FaviconGofer_LDFLAGS = `Magick++-config --cppflags --cxxflags --ldflags --libs`
-
+FaviconGofer_LDFLAGS = \
+	`Magick++-config --cppflags --cxxflags --ldflags --libs` \
+	-lhtmlcxx

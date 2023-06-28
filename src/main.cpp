@@ -36,6 +36,7 @@
 
 #include <Magick++.h>
 #include "RootIconsRetriever.hpp"
+#include "LinkIconsRetriever.hpp"
 #include "program_info.h"
 #include "ficon.hpp"
 
@@ -95,6 +96,9 @@ int execMain (bpo::variables_map& vm) {
 		string favicon = dir/"favicon";
 		image.write(favicon + std::to_string(index++) + "." + image.magick());
 	}
+
+	LinkIconsRetriever lir;
+	lir.dumpLinkTags();
 
 	return 0;
 }
