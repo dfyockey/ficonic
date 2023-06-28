@@ -16,6 +16,27 @@ AX_BOOST_BASE([1.32.0], [], [version 1.32.0 or better of the Boost C++ libraries
 AX_BOOST_PROGRAM_OPTIONS
 AC_SEARCH_LIBS(curl_version_info, curl, [])
 
+### Check for C++ library htmlcxx.
+### ( Based on information from https://dev.to/keelefi/my-autoconf-primer-1jkb
+### ( and https://nerdland.net/2009/07/detecting-c-libraries-with-autotools/
+### ( and https://www.gnu.org/software/autoconf/manual/autoconf-2.67/html_node/Printing-Messages.html
+### ( and https://stackoverflow.com/a/48132112
+### ( and https://stackoverflow.com/a/8290120
+AC_LANG_PUSH([C++])
+SAVED_LDFLAGS=$LDFLAGS
+LDFLAGS="$LDFLAGS -lhtmlcxx"
+AC_MSG_CHECKING([for library htmlcxx])
+AC_LINK_IFELSE(
+	[AC_LANG_PROGRAM([#include <htmlcxx/html/ParserDom.h>], [htmlcxx::HTML::ParserDom testparser])],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		LDFLAGS=$SAVED_LDFLAGS
+	]
+)
+AC_LANG_POP([C++])
+###
+
 LIBS="$BOOST_PROGRAM_OPTIONS_LIB $LIBS"
 
 # Checks for header files.

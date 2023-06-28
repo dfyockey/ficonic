@@ -19,5 +19,4 @@ FaviconGofer_CPPFLAGS =	\
 	-I/usr/include/htmlcxx/html
 
 FaviconGofer_LDFLAGS = \
-	`Magick++-config --cppflags --cxxflags --ldflags --libs` \
-	-lhtmlcxx
+	`Magick++-config --cppflags --cxxflags --ldflags --libs`
