@@ -25,8 +25,8 @@ void RootIconsRetriever::pullIcoFile(string url, ficonvector& ficons, Curler& cu
 
 		///// Store the split images as ficons in both BMP and PNG formats
 		for (auto& image : imgvector) {
-			ficons.push_back( make_ficon("favicon", "BMP", image) );
-			ficons.push_back( make_ficon("favicon", "PNG", image) );
+			ficons.push_back( ficonfactory::make_ficon("favicon", "BMP", image) );
+			ficons.push_back( ficonfactory::make_ficon("favicon", "PNG", image) );
 		}
 	} catch (Exception &e) {
 		std::cout << "favicon parsing error : " << e.what() << std::endl;
@@ -49,7 +49,7 @@ void RootIconsRetriever::pull(string url, ficonvector& ficons) {
 
 	try {
 		Image image(url + "apple-touch-icon.png");
-		ficons.push_back( make_ficon("appleicon", image.magick(), image) );
+		ficons.push_back( ficonfactory::make_ficon("appleicon", image.magick(), image) );
 	} catch (Exception &e) {
 		std::cout << "appleicon parsing error : " << e.what() << std::endl;
 		// assume no apple-touch-icon.png was found and ignore exception

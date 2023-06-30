@@ -29,7 +29,14 @@ namespace ficonic {
 
 	typedef std::vector<struct ficon> ficonvector;
 
-	ficon make_ficon(string rel, string type, Image image);
+	class ficonfactory {
+	private:
+		static ficon make_ficon(string rel, Image image, Blob& blob);
+	public:
+		static ficon make_ficon(string rel, Image image);
+		static ficon make_ficon(string rel, Blob& blob);
+		static ficon make_ficon(string rel, string type, Image image);
+	};
 }
 
 #endif /* SRC_FICON_HPP_ */

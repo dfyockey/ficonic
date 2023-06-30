@@ -31,18 +31,44 @@
 #define SRC_LINKICONSRETRIEVER_HPP_
 
 #include "Curler.h"
+#include <set>
 #include <vector>
+#include "ficon.hpp"
+#include "program_info.h"
+#include <htmlcxx/html/ParserDom.h>
+
+using namespace htmlcxx;
+using namespace ficonic;
 
 class LinkIconsRetriever {
+
 private:
+	typedef tree<HTML::Node>::iterator nodeItr;
+
 	string html;
-	void pullHTML(string url);
-	string str_tolower(string s);
+
+	std::set<string> rels = {
+			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed"
+	};
+
+	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
+	Curler curl;
+
+	string siteurl;
+
+	string str_tolower	(string s);
+	bool   notSubStr	(string str, int pos, int count, string cmp );
+	string finishURL	(string url);
+	Blob&  pullImage	(string url, Blob& blob);
+	string getAttrText	(nodeItr itr, string attr);
+
+	void procLinkIconTag(nodeItr itr, ficonvector& ficons);
+	void getLinkIconTags(ficonvector& ficons);
 
 public:
 	LinkIconsRetriever();
 
-	void dumpLinkTags();
+	void pull(string url, ficonvector& ficons);
 
 	virtual ~LinkIconsRetriever();
 };

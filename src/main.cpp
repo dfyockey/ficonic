@@ -32,8 +32,6 @@
 
 #include <boost/program_options.hpp>
 
-#include "Curler.h"
-
 #include <Magick++.h>
 #include "RootIconsRetriever.hpp"
 #include "LinkIconsRetriever.hpp"
@@ -43,6 +41,8 @@
 using namespace Magick;
 
 using std::string;
+using std::cout;
+using std::endl;
 
 namespace fs = std::filesystem;
 namespace bpo = boost::program_options;
@@ -90,15 +90,15 @@ int execMain (bpo::variables_map& vm) {
 	RootIconsRetriever rooticonsRetriever;
 	rooticonsRetriever.pull(url, ficons);
 
+	LinkIconsRetriever linkiconsRetriever;
+	linkiconsRetriever.pull(url, ficons);
+
 	unsigned int index = 1;
 	for (auto& ficon : ficons) {
 		Image image(ficon.data);
 		string favicon = dir/"favicon";
-		image.write(favicon + std::to_string(index++) + "." + image.magick());
+		image.write(favicon + std::to_string(index++) + "." + ficon.rel + "." + image.magick());
 	}
-
-	LinkIconsRetriever lir;
-	lir.dumpLinkTags();
 
 	return 0;
 }
