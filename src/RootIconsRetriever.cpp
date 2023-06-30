@@ -7,7 +7,6 @@
 
 #include "RootIconsRetriever.hpp"
 
-#include "Curler.h"
 #include "program_info.h"
 #include <fstream>
 #include <Magick++.h>
@@ -15,19 +14,8 @@
 
 ///// private ////////////////////////////////////////////////////////
 
-
-///// public /////////////////////////////////////////////////////////
-
-RootIconsRetriever::RootIconsRetriever() {
-	// TODO Auto-generated constructor stub
-
-}
-
-void RootIconsRetriever::pull(string url, ficonvector& ficons) {
-
+void RootIconsRetriever::pullIcoFile(string url, ficonvector& ficons, Curler& curl) {
 	try {
-		fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
-		Curler curl(&httpHeaderFields);
 		ofstream ofFavicon("/tmp/favicon.ico", std::ios::binary);
 		curl.pull(url + "favicon.ico", ofFavicon);
 
@@ -44,6 +32,20 @@ void RootIconsRetriever::pull(string url, ficonvector& ficons) {
 		std::cout << "favicon parsing error : " << e.what() << std::endl;
 		// assume no favicon.ico file was found and ignore exception
 	}
+}
+
+///// public /////////////////////////////////////////////////////////
+
+RootIconsRetriever::RootIconsRetriever() {
+	// TODO Auto-generated constructor stub
+
+}
+
+void RootIconsRetriever::pull(string url, ficonvector& ficons) {
+	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
+	Curler curl(&httpHeaderFields);
+
+	pullIcoFile(url, ficons, curl);
 
 	try {
 		Image image(url + "apple-touch-icon.png");

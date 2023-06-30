@@ -8,6 +8,7 @@
 #ifndef SRC_ROOTICONSRETRIEVER_HPP_
 #define SRC_ROOTICONSRETRIEVER_HPP_
 
+#include "Curler.h"
 #include <map>
 #include <string>
 #include "ficon.hpp"
@@ -16,6 +17,10 @@ using namespace ficonic;
 using std::string;
 
 class RootIconsRetriever {
+private:
+
+	void pullIcoFile(string url, ficonvector& ficons, Curler& curl);
+
 public:
 	RootIconsRetriever();
 
