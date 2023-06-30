@@ -14,6 +14,18 @@
 
 ///// private ////////////////////////////////////////////////////////
 
+void RootIconsRetriever::pullIcon(string url, string filename, ficonvector& ficons, Curler& curl) {
+	try {
+		ostringstream ossLinkIcon;
+		curl.pull( url + filename, ossLinkIcon );
+		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
+		ficons.push_back( ficonfactory::make_ficon(filename, blob) );
+	} catch (Exception &e) {
+		std::cout << filename << " parsing error : " << e.what() << "\n" \
+				<< "(Assuming no valid or adaptable " << filename << " icon file was found; ignoring the error)\n" << std::endl;
+	}
+}
+
 void RootIconsRetriever::pullFavicon(string url, ficonvector& ficons, Curler& curl) {
 	try {
 		ofstream ofFavicon("/tmp/favicon.ico", std::ios::binary);
@@ -30,21 +42,13 @@ void RootIconsRetriever::pullFavicon(string url, ficonvector& ficons, Curler& cu
 			add_ficon("PNG");
 		}
 	} catch (Exception &e) {
-		std::cout << "favicon parsing error : " << e.what() << std::endl;
-		// assume no favicon.ico file was found and ignore exception
+		// Try pulling favicon.ico as a single image rather than a proper ICO formatted file
+		pullIcon(url, "favicon.ico", ficons, curl);
 	}
 }
 
 void RootIconsRetriever::pullAppleicon(string url, ficonvector& ficons, Curler& curl) {
-	try {
-		ostringstream ossLinkIcon;
-		curl.pull( url + "apple-touch-icon.png", ossLinkIcon );
-		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
-		ficons.push_back( ficonfactory::make_ficon("appleicon", blob) );
-	} catch (Exception &e) {
-		std::cout << "appleicon parsing error : " << e.what() << std::endl;
-		// assume no apple-touch-icon.png was found and ignore exception
-	}
+	pullIcon(url, "apple-touch-icon.png", ficons, curl);
 }
 
 ///// public /////////////////////////////////////////////////////////

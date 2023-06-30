@@ -19,6 +19,7 @@ using std::string;
 class RootIconsRetriever {
 private:
 
+	void pullIcon(string url, string filename, ficonvector& ficons, Curler& curl);
 	void pullFavicon(string url, ficonvector& ficons, Curler& curl);
 	void pullAppleicon(string url, ficonvector& ficons, Curler& curl);
 
