@@ -39,9 +39,9 @@ void RootIconsRetriever::pullFavicon(string url, ficonvector& ficons, Curler& cu
 
 		///// Store the split images as ficons in both BMP and PNG formats
 		for (auto& image : imgvector) {
-#define     add_ficon(T)     ficons.push_back( ficonfactory::make_ficon("favicon", T, image) )
-			add_ficon("BMP");
-			add_ficon("PNG");
+			for (string filetype : {"BMP", "PNG"}) {
+				ficons.push_back( ficonfactory::make_ficon("favicon", filetype, image) );
+			}
 		}
 	} catch (Exception &e) {
 		// Try pulling favicon.ico as a single image rather than a proper ICO formatted file
