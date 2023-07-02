@@ -28,6 +28,8 @@ void RootIconsRetriever::pullIcon(string url, string filename, ficonvector& fico
 
 void RootIconsRetriever::pullFavicon(string url, ficonvector& ficons, Curler& curl) {
 	try {
+		// Saving favicon.ico to a file is needed here because Magick::readImages
+		// apparently can't handle reading an ICO format file from a Magick::Blob.
 		ofstream ofFavicon("/tmp/favicon.ico", std::ios::binary);
 		curl.pull(url + "favicon.ico", ofFavicon);
 
