@@ -9,6 +9,8 @@ FaviconGofer_SOURCES = \
 	src/ficon.cpp \
 	src/ficon.hpp \
 	src/program_info.h \
+	src/IconsRetriever.cpp \
+	src/IconsRetriever.hpp \
 	src/RootIconsRetriever.cpp \
 	src/RootIconsRetriever.hpp \
 	src/LinkIconsRetriever.cpp \

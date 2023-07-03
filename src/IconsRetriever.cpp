@@ -1,7 +1,7 @@
 /*
- * LinkIconsRetriever.h
+ * IconsRetriever.cpp
  *
- *  Created on: Jun 27, 2023
+ *  Created on: Jul 3, 2023
  *      Author: David Yockey
  *
  * MIT License
@@ -27,47 +27,14 @@
  * SOFTWARE.
  */
 
-#ifndef SRC_LINKICONSRETRIEVER_HPP_
-#define SRC_LINKICONSRETRIEVER_HPP_
+#include <src/IconsRetriever.hpp>
 
-#include <set>
-#include <vector>
-#include "ficon.hpp"
-#include "program_info.h"
-#include <htmlcxx/html/ParserDom.h>
-#include "IconsRetriever.hpp"
+IconsRetriever::IconsRetriever() : curl(&httpHeaderFields) {
+	// TODO Auto-generated constructor stub
 
-using namespace htmlcxx;
-using namespace ficonic;
+}
 
-class LinkIconsRetriever : IconsRetriever {
+IconsRetriever::~IconsRetriever() {
+	// TODO Auto-generated destructor stub
+}
 
-private:
-	typedef tree<HTML::Node>::iterator nodeItr;
-
-	string html;
-
-	std::set<string> rels = {
-			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed"
-	};
-
-	string siteurl;
-
-	string str_tolower	(string s);
-	bool   notSubStr	(string str, int pos, int count, string cmp );
-	string finishURL	(string url);
-	Blob&  pullImage	(string url, Blob& blob);
-	string getAttrText	(nodeItr itr, string attr);
-
-	void procLinkIconTag(nodeItr itr, ficonvector& ficons);
-	void getLinkIconTags(ficonvector& ficons);
-
-public:
-	LinkIconsRetriever();
-
-	void pull(string url, ficonvector& ficons);
-
-	virtual ~LinkIconsRetriever();
-};
-
-#endif /* SRC_LINKICONSRETRIEVER_HPP_ */

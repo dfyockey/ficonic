@@ -108,6 +108,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_FaviconGofer_OBJECTS = src/FaviconGofer-Curler.$(OBJEXT) \
 	src/FaviconGofer-main.$(OBJEXT) \
 	src/FaviconGofer-ficon.$(OBJEXT) \
+	src/FaviconGofer-IconsRetriever.$(OBJEXT) \
 	src/FaviconGofer-RootIconsRetriever.$(OBJEXT) \
 	src/FaviconGofer-LinkIconsRetriever.$(OBJEXT)
 FaviconGofer_OBJECTS = $(am_FaviconGofer_OBJECTS)
@@ -130,6 +131,7 @@ DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = src/$(DEPDIR)/FaviconGofer-Curler.Po \
+	src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po \
 	src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po \
 	src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po \
 	src/$(DEPDIR)/FaviconGofer-ficon.Po \
@@ -323,6 +325,8 @@ FaviconGofer_SOURCES = \
 	src/ficon.cpp \
 	src/ficon.hpp \
 	src/program_info.h \
+	src/IconsRetriever.cpp \
+	src/IconsRetriever.hpp \
 	src/RootIconsRetriever.cpp \
 	src/RootIconsRetriever.hpp \
 	src/LinkIconsRetriever.cpp \
@@ -442,6 +446,8 @@ src/FaviconGofer-main.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/FaviconGofer-ficon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/FaviconGofer-IconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/FaviconGofer-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/FaviconGofer-LinkIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
@@ -459,6 +465,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-Curler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-ficon.Po@am__quote@ # am--include-marker
@@ -527,6 +534,20 @@ src/FaviconGofer-ficon.obj: src/ficon.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/FaviconGofer-ficon.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
+
+src/FaviconGofer-IconsRetriever.o: src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-IconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo -c -o src/FaviconGofer-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/FaviconGofer-IconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
+
+src/FaviconGofer-IconsRetriever.obj: src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-IconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo -c -o src/FaviconGofer-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/FaviconGofer-IconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
 
 src/FaviconGofer-RootIconsRetriever.o: src/RootIconsRetriever.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-RootIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo -c -o src/FaviconGofer-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
@@ -832,6 +853,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po
@@ -884,6 +906,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
+	-rm -f src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po

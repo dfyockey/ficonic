@@ -50,14 +50,6 @@ string LinkIconsRetriever::str_tolower(string s)
     return s;
 }
 
-//string LinkIconsRetriever::pullImage(string url) {
-//	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
-//	Curler curl(&httpHeaderFields);
-//	ofstream ofLinkicon("/tmp/linkicon", std::ios::binary);
-//	curl.pull(url, ofLinkicon);
-//	return "/tmp/linkicon";
-//}
-
 bool LinkIconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
 	return str_tolower(str.substr(pos, count)).compare(cmp);
 }
@@ -72,9 +64,6 @@ string LinkIconsRetriever::finishURL(string url) {
 }
 
 Blob& LinkIconsRetriever::pullImage(string url, Blob& blob) {
-	//fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
-	//Curler curl(&httpHeaderFields);
-
 	ostringstream ossLinkIcon;
 	curl.pull( finishURL(url), ossLinkIcon );
 
@@ -122,12 +111,10 @@ void LinkIconsRetriever::getLinkIconTags(ficonvector& ficons) {
 
 ///// public /////////////////////////////////////////////////////////
 
-LinkIconsRetriever::LinkIconsRetriever() : curl(&httpHeaderFields) {
+LinkIconsRetriever::LinkIconsRetriever() : IconsRetriever() {
 }
 
 void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
-	//fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
-	//Curler curl(&httpHeaderFields);
 	siteurl = url;
 	curl.pull(siteurl, html);
 
