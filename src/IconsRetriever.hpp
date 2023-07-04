@@ -32,12 +32,23 @@
 
 #include "Curler.h"
 #include "program_info.h"
+#include "ficon.hpp"
+
+using namespace ficonic;
+
+// The `rel` arguments in the following class's methods should be provided
+// with meaning equivalent to `rel` attributes in HTML link tags.
 
 class IconsRetriever {
 private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
 protected:
 	Curler curl;
+	string str_tolower(string s);
+	void pullImg(string url, string rel, ficonic::ficonvector& ficons);
+	void pullImg	(string url, string filename, string rel, ficonvector& ficons);
+	void pullIcon	(string url, string filename, string rel, ficonvector& ficons);
+	void pullICO	(string url, string filename, string rel, ficonvector& ficons);
 public:
 	IconsRetriever();
 	virtual ~IconsRetriever();
