@@ -66,6 +66,7 @@ public:
 	void pull(string url, ostringstream& ross);
 	void pull(string url, ofstream& rofs);
 
+	string effective_url();
 
 	virtual ~Curler();				// curl_easy_cleanup is executed in the dtor,
 									// so the user doesn't need to remember to call it

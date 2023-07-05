@@ -122,6 +122,12 @@ void Curler::pull(string url, ofstream& rofs) {
 	rofs.write(pulled.c_str(), pulled.length());
 }
 
+string Curler::effective_url() {
+	char *effurl = NULL;
+	curl_easy_getinfo(curl, CURLINFO_EFFECTIVE_URL, &effurl);
+	return effurl;
+}
+
 Curler::~Curler() {
 	if (customHeaders)
 		curl_slist_free_all(customHeaders);
