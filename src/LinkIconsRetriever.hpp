@@ -42,8 +42,10 @@ private:
 	string html;
 
 	std::set<string> rels = {
-			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed",	/* standard rel values */
-			"alternate icon" /* discovered on github.com */
+			"icon",																// HTML5 Standard rel value
+			"shortcut icon",													// HTML5 Standard rel value acceptable for historical reasons
+			"mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed",	// Apple-related rel values
+			"alternate icon"													// From https://github.com, rel value referring to a PNG alternate to an SVG
 	};
 
 	string siteurl;
