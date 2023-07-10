@@ -55,6 +55,5 @@ void RootIconsRetriever::pull(string url, ficonvector& ficons) {
 }
 
 RootIconsRetriever::~RootIconsRetriever() {
-	// TODO Auto-generated destructor stub
 }
 

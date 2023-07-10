@@ -36,25 +36,6 @@ using std::flush;
 
 ///// private ////////////////////////////////////////////////////////
 
-// The str_tolower method is from an example provided in the description of
-// std::tolower at https://en.cppreference.com/w/cpp/string/byte/tolower,
-// licensed under Creative Commons Attribution-Sharealike 3.0 Unported
-// License (CC-BY-SA) and by the GNU Free Documentation License (GFDL)
-// (unversioned, with no invariant sections, front-cover texts, or back-cover
-// texts)
-
-//bool LinkIconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
-//	return !(str_tolower(str.substr(pos, count)) == cmp);
-//}
-//
-//string LinkIconsRetriever::finishURL(string url) {
-//	if ( notSubStr(url,0,8,"https://") && notSubStr(url,0,7,"http://") ) {
-//		url = (url.front() == '/') ? url.substr(1,url.length()-1) : url;
-//		url = siteurl + url;
-//	}
-//	return url;
-//}
-
 string LinkIconsRetriever::getAttrText(nodeItr itr, string attr) {
 	return itr->attribute(attr).second;
 }
@@ -85,11 +66,7 @@ void LinkIconsRetriever::getLinkIconTags(ficonvector& ficons) {
 	nodeItr domItr = dom.begin();
 	nodeItr domEnd = dom.end();
 
-
-
 	while (domItr != domEnd ) {
-
-
 
 		if ( str_tolower( domItr->tagName().c_str() ) == "link"  ) {
 			procLinkIconTag(domItr, ficons);
@@ -117,6 +94,5 @@ void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
 }
 
 LinkIconsRetriever::~LinkIconsRetriever() {
-	// TODO Auto-generated destructor stub
 }
 

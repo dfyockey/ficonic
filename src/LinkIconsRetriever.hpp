@@ -44,18 +44,14 @@ private:
 	std::set<string> rels = {
 			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed",	/* standard rel values */
 			"alternate icon" /* discovered on github.com */
-
 	};
 
 	string siteurl;
+	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
-//	bool	notSubStr		(string str, int pos, int count, string cmp );
-//	string	finishURL		(string url);
 	string	getAttrText		(nodeItr itr, string attr);
 	void	procLinkIconTag	(nodeItr itr, ficonvector& ficons);
 	void	getLinkIconTags	(ficonvector& ficons);
-
-	string	pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
 public:
 	LinkIconsRetriever();

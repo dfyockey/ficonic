@@ -45,25 +45,7 @@ string IconsRetriever::clipLeadingSlash (string url) {
 	return ( (url.front() == '/') ? url.substr(1,url.length()-1) : url );
 }
 
-//bool IconsRetriever::hasFileWithExt(string url) {
-//	int const div = url.find_last_of('/');
-//	if (url.length()-1 > div) {
-//		string file = url.substr(div + 1);
-//		int const dot = file.find_last_of('.');
-//		return (url.length()-1 > dot);
-//	} else {
-//		return false;
-//	}
-//}
-
 string IconsRetriever::finishURL(string url) {
-//	string effurl = curl.effective_url();
-//
-//	if( hasFileWithExt(effurl) ) {
-//		url = effurl;
-//		std::cout << "effurl = " << url << std::endl;
-//	}
-
 	if( noHttpProtocol(url) ) {
 		url = clipLeadingSlash(url);
 	}
@@ -139,12 +121,9 @@ void IconsRetriever::pullICO(string url, string rel, ficonic::ficonvector& ficon
 ///// public /////////////////////////////////////////////////////////
 
 IconsRetriever::IconsRetriever() : curl(&httpHeaderFields) {
-	// TODO Auto-generated constructor stub
-
 }
 
 IconsRetriever::~IconsRetriever() {
-	// TODO Auto-generated destructor stub
 }
 
 void IconsRetriever::pullIcon (string url, string rel, ficonvector& ficons, string filename/*=""*/) {

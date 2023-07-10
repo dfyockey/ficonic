@@ -36,14 +36,13 @@
 
 using namespace ficonic;
 
-// The `rel` arguments in the following class's methods should be provided
-// with meaning equivalent to `rel` attributes in HTML link tags.
+// The `rel` arguments provided in the following class's methods should
+// be from or have a meaning equivalent to `rel` attributes in HTML link tags.
 
 class IconsRetriever {
 private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
 	bool	notSubStr		(string str, int pos, int count, string cmp );
-//	bool	hasFileWithExt	(string url);
 	string	finishURL		(string url);
 	string	getExt			(string file);
 	void	pullImg			(string url, string rel, ficonvector& ficons);
