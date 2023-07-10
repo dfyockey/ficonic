@@ -37,11 +37,11 @@
 ///// private ////////////////////////////////////////////////////////
 
 void RootIconsRetriever::pullFavicon(string url, ficonvector& ficons) {
-	pullIcon(url, "favicon.ico", "favicon", ficons);
+	pullIcon(url, "favicon", ficons, "favicon.ico");
 }
 
 void RootIconsRetriever::pullAppleicon(string url, ficonvector& ficons) {
-	pullIcon(url, "apple-touch-icon.png", "apple-touch-icon", ficons);
+	pullIcon(url, "apple-touch-icon", ficons, "apple-touch-icon.png");
 }
 
 ///// public /////////////////////////////////////////////////////////

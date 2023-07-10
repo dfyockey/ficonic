@@ -30,43 +30,36 @@
 #ifndef SRC_LINKICONSRETRIEVER_HPP_
 #define SRC_LINKICONSRETRIEVER_HPP_
 
-#include <set>
-#include <vector>
-#include "ficon.hpp"
-#include "program_info.h"
 #include <htmlcxx/html/ParserDom.h>
 #include "IconsRetriever.hpp"
 
 using namespace htmlcxx;
-using namespace ficonic;
 
 class LinkIconsRetriever : IconsRetriever {
-
 private:
 	typedef tree<HTML::Node>::iterator nodeItr;
 
 	string html;
 
 	std::set<string> rels = {
-			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed"
+			"shortcut icon", "icon", "mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed",	/* standard rel values */
+			"alternate icon" /* discovered on github.com */
+
 	};
 
 	string siteurl;
 
-	string str_tolower	(string s);
-	bool   notSubStr	(string str, int pos, int count, string cmp );
-	string finishURL	(string url);
-	Blob&  pullImage	(string url, Blob& blob);
-	string getAttrText	(nodeItr itr, string attr);
+//	bool	notSubStr		(string str, int pos, int count, string cmp );
+//	string	finishURL		(string url);
+	string	getAttrText		(nodeItr itr, string attr);
+	void	procLinkIconTag	(nodeItr itr, ficonvector& ficons);
+	void	getLinkIconTags	(ficonvector& ficons);
 
-	void procLinkIconTag(nodeItr itr, ficonvector& ficons);
-	void getLinkIconTags(ficonvector& ficons);
+	string	pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
 public:
 	LinkIconsRetriever();
-
 	void pull(string url, ficonvector& ficons);
-
 	virtual ~LinkIconsRetriever();
 };
 

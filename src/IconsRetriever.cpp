@@ -31,6 +31,48 @@
 #include <iostream>
 #include <string>
 
+///// private ////////////////////////////////////////////////////////
+
+bool IconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
+	return !(str_tolower(str.substr(pos, count)) == cmp);
+}
+
+bool IconsRetriever::noHttpProtocol(string url) {
+	return ( notSubStr(url,0,8,"https://") && notSubStr(url,0,7,"http://") );
+}
+
+string IconsRetriever::clipLeadingSlash (string url) {
+	return ( (url.front() == '/') ? url.substr(1,url.length()-1) : url );
+}
+
+//bool IconsRetriever::hasFileWithExt(string url) {
+//	int const div = url.find_last_of('/');
+//	if (url.length()-1 > div) {
+//		string file = url.substr(div + 1);
+//		int const dot = file.find_last_of('.');
+//		return (url.length()-1 > dot);
+//	} else {
+//		return false;
+//	}
+//}
+
+string IconsRetriever::finishURL(string url) {
+//	string effurl = curl.effective_url();
+//
+//	if( hasFileWithExt(effurl) ) {
+//		url = effurl;
+//		std::cout << "effurl = " << url << std::endl;
+//	}
+
+	if( noHttpProtocol(url) ) {
+		url = clipLeadingSlash(url);
+	}
+
+/**/std::cout << "finished URL = " << url << std::endl;
+
+	return url;
+}
+
 ///// protected //////////////////////////////////////////////////////
 
 // The str_tolower method is from an example provided in the description of
@@ -45,20 +87,31 @@ string IconsRetriever::str_tolower(string s)
     return s;
 }
 
-void IconsRetriever::pullImg(string url, string filename, string rel, ficonic::ficonvector& ficons) {
+string IconsRetriever::getExt(string file) {
+	string ext = file.substr(file.length()-4,4);
+	return str_tolower(ext);
+}
+
+void IconsRetriever::pullImg(string url, string rel, ficonic::ficonvector& ficons) {
 	try {
+		url = finishURL(url);
+/**/	std::cout << "Pulling Img " << url << std::endl;
 		ostringstream ossLinkIcon;
-		curl.pull( url + filename, ossLinkIcon );
+		curl.pull( url , ossLinkIcon );
 		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
 		ficons.push_back( ficonfactory::make_ficon(rel, blob) );
 	} catch (Exception &e) {
-		std::cout << filename << " parsing error : " << e.what() << "\n" \
-				<< "(Assuming no valid or adaptable " << filename \
-				<< " icon file was found; ignoring the error)\n" << std::endl;
+		std::cout << url << " parsing error : " << e.what() << "\n" \
+				<< "(Assuming no valid or adaptable icon file was found;" \
+				<< " ignoring the error)\n" << std::endl;
 	}
 }
 
-void IconsRetriever::pullICO(string url, string filename, string rel, ficonic::ficonvector& ficons) {
+void IconsRetriever::pullImg(string url, string rel, ficonic::ficonvector& ficons, string filename) {
+	pullImg(url + filename, rel, ficons);
+}
+
+void IconsRetriever::pullICO(string url, string rel, ficonic::ficonvector& ficons, string filename) {
 	try {
 		// Saving an ICO format icon to a file is needed here because Magick::readImages
 		// apparently can't handle reading an ICO format file from a Magick::Blob.
@@ -77,17 +130,9 @@ void IconsRetriever::pullICO(string url, string filename, string rel, ficonic::f
 		}
 	} catch (Exception &e) {
 		// Try pulling favicon.ico as a single image rather than a proper ICO formatted file
-		pullImg(url, filename, rel, ficons);
-	}
-}
+/**/	std::cout << "pullICO : " << url << " : " << filename << std::endl;
 
-void IconsRetriever::pullIcon(string url, string filename, string rel, ficonic::ficonvector& ficons) {
-	string ext = filename.substr(filename.length()-4,4);
-
-	if ( str_tolower(ext) == ".ico" ) {
-		pullICO(url, filename, rel, ficons);
-	} else {
-		pullImg(url, filename, rel, ficons);
+		pullImg(finishURL(url + filename), rel, ficons);
 	}
 }
 
@@ -102,3 +147,18 @@ IconsRetriever::~IconsRetriever() {
 	// TODO Auto-generated destructor stub
 }
 
+void IconsRetriever::pullIcon (string url, string rel, ficonvector& ficons, string filename/*=""*/) {
+	string file = ( filename.length()>4 ) ? filename : url;
+
+	if ( getExt(file) == ".ico" ) {
+		// Split url into filename and url if needed
+		if ( filename.empty() ) {
+			size_t filename_start	= url.find_last_of('/') + 1;
+			filename				= url.substr( filename_start, url.length()-1 );	// e.g. `favicon.ico`
+			url						= url.substr( 0, filename_start );				// e.g. `https://curl.se/`
+		}
+		pullICO( url, rel, ficons, filename );
+	} else {
+		pullImg( url, rel, ficons, filename );
+	}
+}

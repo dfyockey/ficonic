@@ -42,16 +42,22 @@ using namespace ficonic;
 class IconsRetriever {
 private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
+	bool	notSubStr		(string str, int pos, int count, string cmp );
+//	bool	hasFileWithExt	(string url);
+	string	finishURL		(string url);
+	string	getExt			(string file);
+	void	pullImg			(string url, string rel, ficonvector& ficons);
+	void	pullImg			(string url, string rel, ficonvector& ficons, string filename);
+	void	pullICO			(string url, string rel, ficonvector& ficons, string filename);
 protected:
 	Curler curl;
-	string str_tolower(string s);
-	void pullImg(string url, string rel, ficonic::ficonvector& ficons);
-	void pullImg	(string url, string filename, string rel, ficonvector& ficons);
-	void pullIcon	(string url, string filename, string rel, ficonvector& ficons);
-	void pullICO	(string url, string filename, string rel, ficonvector& ficons);
+	string	str_tolower			(string s);
+	bool 	noHttpProtocol		(string url);
+	string	clipLeadingSlash	(string url);
 public:
 	IconsRetriever();
 	virtual ~IconsRetriever();
+	void pullIcon (string url, string rel, ficonvector& ficons, string filename="");
 };
 
 #endif /* SRC_ICONSRETRIEVER_HPP_ */

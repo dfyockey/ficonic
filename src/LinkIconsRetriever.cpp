@@ -28,13 +28,11 @@
  */
 
 #include "LinkIconsRetriever.hpp"
-#include <algorithm>
 #include <iostream>
-#include <Magick++.h>
-#include <filesystem>
 
-using namespace std;
-using namespace htmlcxx;
+using std::cout;
+using std::endl;
+using std::flush;
 
 ///// private ////////////////////////////////////////////////////////
 
@@ -44,33 +42,18 @@ using namespace htmlcxx;
 // License (CC-BY-SA) and by the GNU Free Documentation License (GFDL)
 // (unversioned, with no invariant sections, front-cover texts, or back-cover
 // texts)
-string LinkIconsRetriever::str_tolower(string s)
-{
-    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
-    return s;
-}
 
-bool LinkIconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
-	return str_tolower(str.substr(pos, count)).compare(cmp);
-}
-
-string LinkIconsRetriever::finishURL(string url) {
-	if ( notSubStr(url,0,8,"https://") && notSubStr(url,0,7,"http://") ) {
-		url = (url.front() == '/') ? url.substr(1,url.length()-1) : url;
-		url = siteurl + url;
-	}
-	cout << url << endl;
-	return url;
-}
-
-Blob& LinkIconsRetriever::pullImage(string url, Blob& blob) {
-	ostringstream ossLinkIcon;
-	curl.pull( finishURL(url), ossLinkIcon );
-
-	blob.update(ossLinkIcon.str().data(), ossLinkIcon.str().length());
-
-	return blob;
-}
+//bool LinkIconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
+//	return !(str_tolower(str.substr(pos, count)) == cmp);
+//}
+//
+//string LinkIconsRetriever::finishURL(string url) {
+//	if ( notSubStr(url,0,8,"https://") && notSubStr(url,0,7,"http://") ) {
+//		url = (url.front() == '/') ? url.substr(1,url.length()-1) : url;
+//		url = siteurl + url;
+//	}
+//	return url;
+//}
 
 string LinkIconsRetriever::getAttrText(nodeItr itr, string attr) {
 	return itr->attribute(attr).second;
@@ -78,30 +61,36 @@ string LinkIconsRetriever::getAttrText(nodeItr itr, string attr) {
 
 void LinkIconsRetriever::procLinkIconTag(nodeItr itr, ficonvector& ficons) {
 	itr->parseAttributes();
-	string reltext = getAttrText(itr, "rel");
-	if (rels.find(reltext) != rels.end()) {
-
-		string hreftext = getAttrText(itr, "href");										// Temporary Test Code
-		cout << hreftext << endl;														// ( to block .ico file processing
-		cout << hreftext.substr(hreftext.length()-4,4) << endl;							// ( until RootIconsReciever code
-		if (str_tolower(hreftext.substr(hreftext.length()-4,4)).compare(".ico")) {		// ( to handle it can be accessed
-
-			Blob blob;
-			ficon f = ficonfactory::make_ficon( reltext, pullImage( getAttrText(itr, "href"), blob ) );
-			ficons.push_back(f);
-
-		}																				// Temporary Test Code
+	std::cout << "procLinkIconTag : " << getAttrText(itr, "href") << std::endl;
+	string rel = getAttrText(itr, "rel");
+	if (rels.find(rel) != rels.end()) {
+		string url = getAttrText(itr, "href");
+		if( noHttpProtocol(url) ) {
+			url = pulledsite_url + clipLeadingSlash(url);
+		}
+		std::cout << "procLinkIconTag url : " << url << std::endl;
+		pullIcon(url, rel, ficons);
 	}
 }
 
 void LinkIconsRetriever::getLinkIconTags(ficonvector& ficons) {
 	HTML::ParserDom parser;
+
+/**/cout << "start html parsing..." << flush;
+
 	tree<HTML::Node> dom = parser.parseTree(html);
+
+/**/cout << "end html parsing" << endl;
 
 	nodeItr domItr = dom.begin();
 	nodeItr domEnd = dom.end();
 
+
+
 	while (domItr != domEnd ) {
+
+
+
 		if ( str_tolower( domItr->tagName().c_str() ) == "link"  ) {
 			procLinkIconTag(domItr, ficons);
 		}
@@ -115,8 +104,14 @@ LinkIconsRetriever::LinkIconsRetriever() : IconsRetriever() {
 }
 
 void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
+/**/cout << "start pull..." << flush;
+
 	siteurl = url;
 	curl.pull(siteurl, html);
+
+/**/cout << "end pull" << endl;
+/**/cout << "Effective URL = " << curl.effective_url() << endl;
+	pulledsite_url = curl.effective_url();
 
 	getLinkIconTags(ficons);
 }
