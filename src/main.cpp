@@ -1,5 +1,5 @@
 /*
- * FaviconGofer.cpp
+ * main.cpp
  *
  * MIT License
  *
@@ -65,17 +65,24 @@ bpo::variables_map initVariablesMap(int argc, char* argv[], bpo::options_descrip
 	return vm;
 }
 
-void parseVariablesMap (bpo::variables_map& vm, string& url, fs::path& dir ) {
+void set_url(bpo::variables_map& vm, string& url) {
 	if (vm.count("url")) {
 		url = vm["url"].as<string>();
 		if ( url.back() != '/') {
 			url += "/";
 		}
 	}
+}
 
+void set_dir(bpo::variables_map& vm, fs::path& dir) {
 	if (vm.count("dir")) {
 		dir = vm["dir"].as<fs::path>();
 	}
+}
+
+void parseVariablesMap (bpo::variables_map& vm, string& url, fs::path& dir) {
+	set_url(vm, url);
+	set_dir(vm, dir);
 }
 
 //////////////////////////////////////////////////////////////////////
