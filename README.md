@@ -1,11 +1,16 @@
-# FaviconGofer
-Utility to retrieve favicons for a given URL
+# ficonic
+Utility for retrieving favicons and other site-related icons for a given URL
 
-This utility currently only provides icons based on files stored in a site's root directory where those files exist. A site's `favicon.ico` file is retrieved, split into its constituent icon images, and each icon image is provided in both BMP and PNG formats. A site's `apple-touch-icon.png` file is also retrieved and stored. The resultant image files are stored in a user specified directory.
+## Description
+The purpose of _ficonic_ is to download all icons intended for use in identifying a site at a given URL. This allows the user to select the icon best suited for the medium through which they intend to identify the site.
 
-If desired, the retrieved `favicon.ico` file from the last run of the application may be recovered from the system's temporary directory (currently assumed to be `/tmp`; that needs to be fixed...) until the directory is cleared by the system.
+_ficonic_ downloads `favicon.ico` and `apple-touch-icon.png` files where found in the site's root directory and any icons identified in HTML `link` tags having recognized `rel` values. Any properly formatted `.ico` files are split into their contained icons and saved in as both `.bmp` and `.png` format files. Therefore, if a `.ico` file contains three different sized icons, for example, _ficonic_ will save six icons for the one file: three `.bmp` files and three `.png` files. An attempt is made to determine the actual format of an improperly formatted `.ico` file, e.g. where a `.png` file has simply been renamed `favicon.ico`; if successful, the icon is saved in that format with the proper extension.
 
-Run `FaviconGofer -h` for usage information.
+The downloaded icons are saved to a user-specified directory. While their contained icons are saved, `.ico` files themselves are not currently saved.
+
+If desired, the retrieved `favicon.ico` file from the last run of the application may be recovered from the system's temporary directory (currently assumed to be `/tmp`) until the directory is cleared by the system.
+
+Run `ficonic -h` for usage information.
 
 ## Dependencies
 The following libraries are required:
@@ -15,4 +20,8 @@ The following libraries are required:
 * Magick++ version 6 (C++ Bindings library for ImageMagick)
 * htmlcxx
 
-Note: Magick++ for GraphicsMagick _**may**_ work but has not been tested. If you should happen to test it, please post an Issue describing your experience so I can refer to the information here, giving you credit of course. _Thanks!_
+## To Do
+* Properly obtain the path to a system's temporary directory.
+* Save `.ico` files along with icon files.
+* Handle HTML `meta` tags referring to Microsoft tiles.
+* Handle Progressive Web App manifests referring to icons.

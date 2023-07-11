@@ -30,6 +30,6 @@
 #ifndef SRC_PROGRAM_INFO_H_
 #define SRC_PROGRAM_INFO_H_
 
-#define PROGNAME "Ficonic"
+#define PROGNAME "ficonic"
 
 #endif /* SRC_PROGRAM_INFO_H_ */

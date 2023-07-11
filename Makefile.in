@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = FaviconGofer$(EXEEXT)
+bin_PROGRAMS = ficonic$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -105,16 +105,15 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_FaviconGofer_OBJECTS = src/FaviconGofer-Curler.$(OBJEXT) \
-	src/FaviconGofer-main.$(OBJEXT) \
-	src/FaviconGofer-ficon.$(OBJEXT) \
-	src/FaviconGofer-IconsRetriever.$(OBJEXT) \
-	src/FaviconGofer-RootIconsRetriever.$(OBJEXT) \
-	src/FaviconGofer-LinkIconsRetriever.$(OBJEXT)
-FaviconGofer_OBJECTS = $(am_FaviconGofer_OBJECTS)
-FaviconGofer_LDADD = $(LDADD)
-FaviconGofer_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) \
-	$(FaviconGofer_LDFLAGS) $(LDFLAGS) -o $@
+am_ficonic_OBJECTS = src/ficonic-Curler.$(OBJEXT) \
+	src/ficonic-main.$(OBJEXT) src/ficonic-ficon.$(OBJEXT) \
+	src/ficonic-IconsRetriever.$(OBJEXT) \
+	src/ficonic-RootIconsRetriever.$(OBJEXT) \
+	src/ficonic-LinkIconsRetriever.$(OBJEXT)
+ficonic_OBJECTS = $(am_ficonic_OBJECTS)
+ficonic_LDADD = $(LDADD)
+ficonic_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(ficonic_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -130,12 +129,11 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = src/$(DEPDIR)/FaviconGofer-Curler.Po \
-	src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po \
-	src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po \
-	src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po \
-	src/$(DEPDIR)/FaviconGofer-ficon.Po \
-	src/$(DEPDIR)/FaviconGofer-main.Po
+am__depfiles_remade = src/$(DEPDIR)/ficonic-Curler.Po \
+	src/$(DEPDIR)/ficonic-IconsRetriever.Po \
+	src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po \
+	src/$(DEPDIR)/ficonic-RootIconsRetriever.Po \
+	src/$(DEPDIR)/ficonic-ficon.Po src/$(DEPDIR)/ficonic-main.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -166,8 +164,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(FaviconGofer_SOURCES)
-DIST_SOURCES = $(FaviconGofer_SOURCES)
+SOURCES = $(ficonic_SOURCES)
+DIST_SOURCES = $(ficonic_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -318,7 +316,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
-FaviconGofer_SOURCES = \
+ficonic_SOURCES = \
 	src/Curler.cpp \
 	src/Curler.h \
 	src/main.cpp \
@@ -332,11 +330,11 @@ FaviconGofer_SOURCES = \
 	src/LinkIconsRetriever.cpp \
 	src/LinkIconsRetriever.hpp
 
-FaviconGofer_CPPFLAGS = \
+ficonic_CPPFLAGS = \
 	-I/usr/include/ImageMagick-6 \
 	-I/usr/include/htmlcxx/html
 
-FaviconGofer_LDFLAGS = \
+ficonic_LDFLAGS = \
 	`Magick++-config --cppflags --cxxflags --ldflags --libs`
 
 all: config.h
@@ -440,22 +438,22 @@ src/$(am__dirstamp):
 src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) src/$(DEPDIR)
 	@: > src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-Curler.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-Curler.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-main.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-main.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-ficon.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-ficon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-IconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-IconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/FaviconGofer-LinkIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-LinkIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 
-FaviconGofer$(EXEEXT): $(FaviconGofer_OBJECTS) $(FaviconGofer_DEPENDENCIES) $(EXTRA_FaviconGofer_DEPENDENCIES) 
-	@rm -f FaviconGofer$(EXEEXT)
-	$(AM_V_CXXLD)$(FaviconGofer_LINK) $(FaviconGofer_OBJECTS) $(FaviconGofer_LDADD) $(LIBS)
+ficonic$(EXEEXT): $(ficonic_OBJECTS) $(ficonic_DEPENDENCIES) $(EXTRA_ficonic_DEPENDENCIES) 
+	@rm -f ficonic$(EXEEXT)
+	$(AM_V_CXXLD)$(ficonic_LINK) $(ficonic_OBJECTS) $(ficonic_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -464,12 +462,12 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-Curler.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-ficon.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/FaviconGofer-main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-Curler.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-IconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-RootIconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-ficon.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-main.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -493,89 +491,89 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-src/FaviconGofer-Curler.o: src/Curler.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-Curler.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-Curler.Tpo -c -o src/FaviconGofer-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-Curler.Tpo src/$(DEPDIR)/FaviconGofer-Curler.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/FaviconGofer-Curler.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-Curler.o: src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-Curler.o -MD -MP -MF src/$(DEPDIR)/ficonic-Curler.Tpo -c -o src/ficonic-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-Curler.Tpo src/$(DEPDIR)/ficonic-Curler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/ficonic-Curler.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-Curler.o `test -f 'src/Curler.cpp' || echo '$(srcdir)/'`src/Curler.cpp
 
-src/FaviconGofer-Curler.obj: src/Curler.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-Curler.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-Curler.Tpo -c -o src/FaviconGofer-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-Curler.Tpo src/$(DEPDIR)/FaviconGofer-Curler.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/FaviconGofer-Curler.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-Curler.obj: src/Curler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-Curler.obj -MD -MP -MF src/$(DEPDIR)/ficonic-Curler.Tpo -c -o src/ficonic-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-Curler.Tpo src/$(DEPDIR)/ficonic-Curler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Curler.cpp' object='src/ficonic-Curler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-Curler.obj `if test -f 'src/Curler.cpp'; then $(CYGPATH_W) 'src/Curler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Curler.cpp'; fi`
 
-src/FaviconGofer-main.o: src/main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-main.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-main.Tpo -c -o src/FaviconGofer-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-main.Tpo src/$(DEPDIR)/FaviconGofer-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/FaviconGofer-main.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-main.o: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-main.o -MD -MP -MF src/$(DEPDIR)/ficonic-main.Tpo -c -o src/ficonic-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-main.Tpo src/$(DEPDIR)/ficonic-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/ficonic-main.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-main.o `test -f 'src/main.cpp' || echo '$(srcdir)/'`src/main.cpp
 
-src/FaviconGofer-main.obj: src/main.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-main.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-main.Tpo -c -o src/FaviconGofer-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-main.Tpo src/$(DEPDIR)/FaviconGofer-main.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/FaviconGofer-main.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-main.obj: src/main.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-main.obj -MD -MP -MF src/$(DEPDIR)/ficonic-main.Tpo -c -o src/ficonic-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-main.Tpo src/$(DEPDIR)/ficonic-main.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/main.cpp' object='src/ficonic-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-main.obj `if test -f 'src/main.cpp'; then $(CYGPATH_W) 'src/main.cpp'; else $(CYGPATH_W) '$(srcdir)/src/main.cpp'; fi`
 
-src/FaviconGofer-ficon.o: src/ficon.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-ficon.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-ficon.Tpo -c -o src/FaviconGofer-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-ficon.Tpo src/$(DEPDIR)/FaviconGofer-ficon.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/FaviconGofer-ficon.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-ficon.o: src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-ficon.o -MD -MP -MF src/$(DEPDIR)/ficonic-ficon.Tpo -c -o src/ficonic-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-ficon.Tpo src/$(DEPDIR)/ficonic-ficon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/ficonic-ficon.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-ficon.o `test -f 'src/ficon.cpp' || echo '$(srcdir)/'`src/ficon.cpp
 
-src/FaviconGofer-ficon.obj: src/ficon.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-ficon.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-ficon.Tpo -c -o src/FaviconGofer-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-ficon.Tpo src/$(DEPDIR)/FaviconGofer-ficon.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/FaviconGofer-ficon.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-ficon.obj: src/ficon.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-ficon.obj -MD -MP -MF src/$(DEPDIR)/ficonic-ficon.Tpo -c -o src/ficonic-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-ficon.Tpo src/$(DEPDIR)/ficonic-ficon.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/ficon.cpp' object='src/ficonic-ficon.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
 
-src/FaviconGofer-IconsRetriever.o: src/IconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-IconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo -c -o src/FaviconGofer-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/FaviconGofer-IconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-IconsRetriever.o: src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-IconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-IconsRetriever.Tpo -c -o src/ficonic-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-IconsRetriever.Tpo src/$(DEPDIR)/ficonic-IconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/ficonic-IconsRetriever.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
 
-src/FaviconGofer-IconsRetriever.obj: src/IconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-IconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo -c -o src/FaviconGofer-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-IconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/FaviconGofer-IconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-IconsRetriever.obj: src/IconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-IconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/ficonic-IconsRetriever.Tpo -c -o src/ficonic-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-IconsRetriever.Tpo src/$(DEPDIR)/ficonic-IconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/ficonic-IconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
 
-src/FaviconGofer-RootIconsRetriever.o: src/RootIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-RootIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo -c -o src/FaviconGofer-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/FaviconGofer-RootIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-RootIconsRetriever.o: src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-RootIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-RootIconsRetriever.Tpo -c -o src/ficonic-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-RootIconsRetriever.Tpo src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/ficonic-RootIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
 
-src/FaviconGofer-RootIconsRetriever.obj: src/RootIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-RootIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo -c -o src/FaviconGofer-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/FaviconGofer-RootIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-RootIconsRetriever.obj: src/RootIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-RootIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/ficonic-RootIconsRetriever.Tpo -c -o src/ficonic-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-RootIconsRetriever.Tpo src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/RootIconsRetriever.cpp' object='src/ficonic-RootIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-RootIconsRetriever.obj `if test -f 'src/RootIconsRetriever.cpp'; then $(CYGPATH_W) 'src/RootIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/RootIconsRetriever.cpp'; fi`
 
-src/FaviconGofer-LinkIconsRetriever.o: src/LinkIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-LinkIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Tpo -c -o src/FaviconGofer-LinkIconsRetriever.o `test -f 'src/LinkIconsRetriever.cpp' || echo '$(srcdir)/'`src/LinkIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/LinkIconsRetriever.cpp' object='src/FaviconGofer-LinkIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-LinkIconsRetriever.o: src/LinkIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-LinkIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-LinkIconsRetriever.Tpo -c -o src/ficonic-LinkIconsRetriever.o `test -f 'src/LinkIconsRetriever.cpp' || echo '$(srcdir)/'`src/LinkIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-LinkIconsRetriever.Tpo src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/LinkIconsRetriever.cpp' object='src/ficonic-LinkIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-LinkIconsRetriever.o `test -f 'src/LinkIconsRetriever.cpp' || echo '$(srcdir)/'`src/LinkIconsRetriever.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-LinkIconsRetriever.o `test -f 'src/LinkIconsRetriever.cpp' || echo '$(srcdir)/'`src/LinkIconsRetriever.cpp
 
-src/FaviconGofer-LinkIconsRetriever.obj: src/LinkIconsRetriever.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/FaviconGofer-LinkIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Tpo -c -o src/FaviconGofer-LinkIconsRetriever.obj `if test -f 'src/LinkIconsRetriever.cpp'; then $(CYGPATH_W) 'src/LinkIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/LinkIconsRetriever.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Tpo src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/LinkIconsRetriever.cpp' object='src/FaviconGofer-LinkIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-LinkIconsRetriever.obj: src/LinkIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-LinkIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/ficonic-LinkIconsRetriever.Tpo -c -o src/ficonic-LinkIconsRetriever.obj `if test -f 'src/LinkIconsRetriever.cpp'; then $(CYGPATH_W) 'src/LinkIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/LinkIconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-LinkIconsRetriever.Tpo src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/LinkIconsRetriever.cpp' object='src/ficonic-LinkIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(FaviconGofer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/FaviconGofer-LinkIconsRetriever.obj `if test -f 'src/LinkIconsRetriever.cpp'; then $(CYGPATH_W) 'src/LinkIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/LinkIconsRetriever.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-LinkIconsRetriever.obj `if test -f 'src/LinkIconsRetriever.cpp'; then $(CYGPATH_W) 'src/LinkIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/LinkIconsRetriever.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -852,12 +850,12 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-main.Po
+		-rm -f src/$(DEPDIR)/ficonic-Curler.Po
+	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
+	-rm -f src/$(DEPDIR)/ficonic-main.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -905,12 +903,12 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f src/$(DEPDIR)/FaviconGofer-Curler.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-IconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-LinkIconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-RootIconsRetriever.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-ficon.Po
-	-rm -f src/$(DEPDIR)/FaviconGofer-main.Po
+		-rm -f src/$(DEPDIR)/ficonic-Curler.Po
+	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
+	-rm -f src/$(DEPDIR)/ficonic-main.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

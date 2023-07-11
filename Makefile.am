@@ -1,8 +1,8 @@
 AUTOMAKE_OPTIONS = subdir-objects
 
-bin_PROGRAMS = FaviconGofer
+bin_PROGRAMS = ficonic
 
-FaviconGofer_SOURCES = \
+ficonic_SOURCES = \
 	src/Curler.cpp \
 	src/Curler.h \
 	src/main.cpp \
@@ -16,9 +16,9 @@ FaviconGofer_SOURCES = \
 	src/LinkIconsRetriever.cpp \
 	src/LinkIconsRetriever.hpp
 	
-FaviconGofer_CPPFLAGS =	\
+ficonic_CPPFLAGS =	\
 	-I/usr/include/ImageMagick-6 \
 	-I/usr/include/htmlcxx/html
 
-FaviconGofer_LDFLAGS = \
+ficonic_LDFLAGS = \
 	`Magick++-config --cppflags --cxxflags --ldflags --libs`
