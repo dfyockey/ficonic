@@ -30,6 +30,7 @@
 #include "IconsRetriever.hpp"
 #include <iostream>
 #include <string>
+#include <filesystem>
 
 ///// private ////////////////////////////////////////////////////////
 
@@ -95,14 +96,16 @@ void IconsRetriever::pullImg(string url, string rel, ficonic::ficonvector& ficon
 
 void IconsRetriever::pullICO(string url, string rel, ficonic::ficonvector& ficons, string filename) {
 	try {
+		std::filesystem::path ICOfile = std::filesystem::temp_directory_path() / filename;
+
 		// Saving an ICO format icon to a file is needed here because Magick::readImages
 		// apparently can't handle reading an ICO format file from a Magick::Blob.
-		ofstream ofICO("/tmp/" + filename, std::ios::binary);
-		curl.pull(url + filename, ofICO);
+		ofstream ofICO( ICOfile.string(), std::ios::binary );
+		curl.pull( url + filename, ofICO );
 
 		///// Pull the favicon.ico file, spliting it into its contained images in the process.
 		std::vector<Image> imgvector;
-		readImages( &imgvector, "/tmp/" + filename);
+		readImages( &imgvector, ICOfile.string() );
 
 		///// Store the split images as ficons in both BMP and PNG formats
 		for (auto& image : imgvector) {

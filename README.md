@@ -8,7 +8,7 @@ _ficonic_ downloads `favicon.ico` and `apple-touch-icon.png` files where found i
 
 The downloaded icons are saved to a user-specified directory. While their contained icons are saved, `.ico` files themselves are not currently saved.
 
-If desired, the retrieved `favicon.ico` file from the last run of the application may be recovered from the system's temporary directory (currently assumed to be `/tmp`) until the directory is cleared by the system.
+If desired, the retrieved `favicon.ico` file from the last run of the application may be recovered from the system's temporary directory until the directory is cleared by the system.
 
 Run `ficonic -h` for usage information.
 
@@ -21,7 +21,8 @@ The following libraries are required:
 * htmlcxx
 
 ## To Do
-* Properly obtain the path to a system's temporary directory.
 * Save `.ico` files along with icon files.
 * Handle HTML `meta` tags referring to Microsoft tiles.
 * Handle Progressive Web App manifests referring to icons.
+* Resolve build warnings about `MAGICKCORE_QUANTUM_DEPTH` and `MAGICKCORE_HDRI_ENABLE`.
+* Enable use of `$HOME` and `~` to refer to the home directory in specifying the icon storage directory path.
