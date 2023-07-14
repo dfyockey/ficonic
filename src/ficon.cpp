@@ -33,7 +33,12 @@ using namespace ficonic;
 ficon ficonfactory::make_ficon(string rel, Image image, Blob& blob) {
 	size_t width  = image.columns();
 	size_t height = image.rows();
-	ficonic::ficon f(rel, image.magick(), std::make_pair(width, height), blob);
+	ficon f(
+			rel,
+			std::make_pair(image.format(), image.magick()),
+			std::make_pair(width, height),
+			blob
+	);
 	return f;
 }
 
@@ -48,6 +53,7 @@ ficon ficonfactory::make_ficon(string rel, Blob& blob) {
 	return ficonfactory::make_ficon(rel, image, blob);
 }
 
+// Use to generate ficons of different types for images in a multiple frame image (e.g. ICO, GIF)
 ficon ficonfactory::make_ficon(string rel, string type, Image image) {
 	image.magick(type);
 	return ficonfactory::make_ficon(rel, image);

@@ -32,6 +32,9 @@
 #include <string>
 #include <filesystem>
 
+using std::vector;
+using namespace std::filesystem;
+
 ///// private ////////////////////////////////////////////////////////
 
 bool IconsRetriever::notSubStr(string str, int pos, int count, string cmp) {
@@ -94,9 +97,22 @@ void IconsRetriever::pullImg(string url, string rel, ficonic::ficonvector& ficon
 	pullImg(url + filename, rel, ficons);
 }
 
+void IconsRetriever::make_ficons(vector<Image>& imgvector, string ICOfilepath, string rel, ficonic::ficonvector& ficons) {
+	///// Store the split images as ficons in both BMP and PNG formats
+	for (auto& image : imgvector) {
+		for (string filetype : {"BMP", "PNG"}) {
+			ficons.push_back( ficonfactory::make_ficon(rel, filetype, image) );
+		}
+	}
+
+	///// Store the ICO file as a ficon
+
+	// TODO: Implement storage of data for .ico file here!
+}
+
 void IconsRetriever::pullICO(string url, string rel, ficonic::ficonvector& ficons, string filename) {
 	try {
-		std::filesystem::path ICOfile = std::filesystem::temp_directory_path() / filename;
+		path ICOfile = temp_directory_path() / filename;
 
 		// Saving an ICO format icon to a file is needed here because Magick::readImages
 		// apparently can't handle reading an ICO format file from a Magick::Blob.
@@ -104,15 +120,10 @@ void IconsRetriever::pullICO(string url, string rel, ficonic::ficonvector& ficon
 		curl.pull( url + filename, ofICO );
 
 		///// Pull the favicon.ico file, spliting it into its contained images in the process.
-		std::vector<Image> imgvector;
-		readImages( &imgvector, ICOfile.string() );
+		vector<Image> imgvector;
+		readImages	( &imgvector, ICOfile.string() );
 
-		///// Store the split images as ficons in both BMP and PNG formats
-		for (auto& image : imgvector) {
-			for (string filetype : {"BMP", "PNG"}) {
-				ficons.push_back( ficonfactory::make_ficon(rel, filetype, image) );
-			}
-		}
+		make_ficons	( imgvector,  ICOfile.string(), rel, ficons );
 	} catch (Exception &e) {
 		// Try pulling favicon.ico as a single image rather than a proper ICO formatted file
 /**/	std::cout << "pullICO : " << url << " : " << filename << std::endl;

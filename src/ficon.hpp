@@ -40,13 +40,14 @@ using std::string;
 namespace ficonic {
 
 	struct ficon {
-		ficon(string rel, string type, std::pair<size_t, size_t> size, Blob data)
-			: rel(rel), type(type), width(size.first), height(size.second), data(data) {};
-		string	rel;
-		string	type;
-		size_t	width;
-		size_t	height;
-		Blob	data;
+		ficon(string rel, std::pair<string, string> format, std::pair<size_t, size_t> size, Blob data)
+			: rel(rel), type(format.first), ext(format.second), width(size.first), height(size.second), data(data) {};
+		string	rel;	// from HTML link or ficonic-defined for root directory icons
+		string	type;	// long form icon format
+		string	ext;	// short form icon format (i.e. extension)
+		size_t	width;	// icon width
+		size_t	height; // icon height
+		Blob	data;	// icon data
 	};
 
 	typedef std::vector<struct ficon> ficonvector;

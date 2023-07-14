@@ -47,6 +47,7 @@ private:
 	string	getExt			(string file);
 	void	pullImg			(string url, string rel, ficonvector& ficons);
 	void	pullImg			(string url, string rel, ficonvector& ficons, string filename);
+	void	make_ficons		(std::vector<Image>& imgvector, string ICOfilepath, string rel, ficonvector& ficons);
 	void	pullICO			(string url, string rel, ficonvector& ficons, string filename);
 protected:
 	Curler curl;

@@ -102,9 +102,15 @@ int execMain (bpo::variables_map& vm) {
 
 	unsigned int index = 1;
 	for (auto& ficon : ficons) {
-		Image image(ficon.data);
-		string favicon = dir/"favicon";
-		image.write(favicon + std::to_string(index++) + "." + ficon.rel + "." + image.magick());
+		if (ficon.ext != "ICO") {
+			Image image(ficon.data);
+			string favicon = dir/"favicon";
+			image.write(favicon + std::to_string(index++) + "." + ficon.rel + "." + image.magick());
+		} else {
+			// TODO: Implement .ico file saving here!
+
+			// But first, storage of data for any .ico files into ficons has to be implemented someplace...
+		}
 	}
 
 	return 0;
