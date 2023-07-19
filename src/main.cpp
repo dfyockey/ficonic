@@ -43,6 +43,7 @@ using namespace Magick;
 using std::string;
 using std::cout;
 using std::endl;
+using std::to_string;
 
 namespace fs = std::filesystem;
 namespace bpo = boost::program_options;
@@ -87,31 +88,38 @@ void parseVariablesMap (bpo::variables_map& vm, string& url, fs::path& dir) {
 
 //////////////////////////////////////////////////////////////////////
 
+inline string fill_spaces (string s) { std::replace(s.begin(), s.end(), ' ', '_'); return s; }
+
+void save_icons (ficonic::ficonvector ficons, fs::path dir) {
+	std::array<unsigned int, 2> index = {1,1};
+	string favicon = dir/"favicon";
+	for (auto& ficon : ficons) {
+		if (ficon.ext != "ICO") {
+			Image image(ficon.data);
+			image.write(favicon + to_string(index[0]++) + "." + fill_spaces(ficon.rel) + "." + image.magick());
+		} else {
+			Blob ico_blob(ficon.data);
+			const char* ico_data = static_cast<const char*>(ico_blob.data());
+			ofstream ofICO( favicon + to_string(index[1]++) + "." + fill_spaces(ficon.rel) + "." + ficon.ext, std::ios::binary);
+			ofICO.write(ico_data, ico_blob.length());
+		}
+	}
+}
+
 int execMain (bpo::variables_map& vm) {
 	string url;
 	fs::path dir;
-
 	parseVariablesMap (vm, url, dir);
 
 	ficonic::ficonvector ficons;
+
 	RootIconsRetriever rooticonsRetriever;
 	rooticonsRetriever.pull(url, ficons);
 
 	LinkIconsRetriever linkiconsRetriever;
 	linkiconsRetriever.pull(url, ficons);
 
-	unsigned int index = 1;
-	for (auto& ficon : ficons) {
-		if (ficon.ext != "ICO") {
-			Image image(ficon.data);
-			string favicon = dir/"favicon";
-			image.write(favicon + std::to_string(index++) + "." + ficon.rel + "." + image.magick());
-		} else {
-			// TODO: Implement .ico file saving here!
-
-			// But first, storage of data for any .ico files into ficons has to be implemented someplace...
-		}
-	}
+	save_icons(ficons, dir);
 
 	return 0;
 }

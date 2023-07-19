@@ -42,13 +42,16 @@ using namespace ficonic;
 class IconsRetriever {
 private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
-	bool	notSubStr		(string str, int pos, int count, string cmp );
-	string	finishURL		(string url);
-	string	getExt			(string file);
-	void	pullImg			(string url, string rel, ficonvector& ficons);
-	void	pullImg			(string url, string rel, ficonvector& ficons, string filename);
-	void	make_ficons		(std::vector<Image>& imgvector, string ICOfilepath, string rel, ficonvector& ficons);
-	void	pullICO			(string url, string rel, ficonvector& ficons, string filename);
+	bool	notSubStr	(string str, int pos, int count, string cmp );
+	string	finishURL	(string url);
+	string	getExt		(string file);
+	void	pullImg		(string url, string rel, ficonvector& ficons);
+	void	pullImg		(string url, string rel, ficonvector& ficons, string filename);
+
+	void	saveLargerSize		(ficonvector& ficons, sizes& size);
+	sizes	push_ico_img_ficons	(string ICOfile, string rel, ficonvector& ficons);
+	void	push_ico_ficon		(ostringstream& ossICO, string rel, formats format, sizes size, ficonvector& ficons);
+	void	pullICO				(string url, string rel, ficonvector& ficons, string filename);
 protected:
 	Curler curl;
 	string	str_tolower			(string s);
