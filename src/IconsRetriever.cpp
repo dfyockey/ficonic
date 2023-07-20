@@ -88,9 +88,8 @@ void IconsRetriever::pullImg(string url, string rel, ficonvector& ficons) {
 		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
 		ficons.push_back( ficonfactory::make_ficon(rel, blob) );
 	} catch (Exception &e) {
-		std::cout << url << " parsing error : " << e.what() << "\n" \
-				<< "(Assuming no valid or adaptable icon file was found;" \
-				<< " ignoring the error)\n" << std::endl;
+		std::cerr << url << " parsing error : " << e.what() << "\n" \
+				  << "(Assuming no valid icon file found; skipping file)\n" << std::endl;
 	}
 }
 
@@ -133,29 +132,32 @@ void IconsRetriever::push_ico_ficon(ostringstream& ossICO, string rel, formats f
 	ficons.push_back( ficonfactory::make_ficon(rel, format, size, blob) );
 }
 
+string save_ico_to_sys_temp(string ico_filename, ostringstream& ossICO) {
+	string		ico_file	( (temp_directory_path() / ico_filename).string() );
+	string		ico_str		( ossICO.str() );
+	ofstream	ofICO		( ico_file, std::ios::binary );
+	ofICO.write( ico_str.c_str(), ico_str.size() );
+	return ico_file;
+}
+
 void IconsRetriever::pullICO(string url, string rel, ficonvector& ficons, string ico_filename) {
 	try {
 		// Pull to an ostringstream rather than a filestream to facilitate later saving to a ficon's blob
 		ostringstream ossICO;
 		curl.pull( url + ico_filename, ossICO );
 
-		// Saving an ICO format icon to a file is needed here because Magick::readImages
-		// apparently can't handle reading an ICO format file from a Magick::Blob.
-		string		ico_file	( (temp_directory_path() / ico_filename).string() );
-		string		ico_str		( ossICO.str() );
-		ofstream	ofICO		( ico_file, std::ios::binary );
-		ofICO.write( ico_str.c_str(), ico_str.size() );
-
-		sizes size = push_ico_img_ficons( ico_file, rel, ficons );
+		// Saving an ICO format icon to a file is needed here because Magick::readImages in
+		// push_ico_img_ficons can't handle reading an ICO format file from a Magick::Blob.
+		string ico_file = save_ico_to_sys_temp(ico_filename, ossICO);
+		sizes size		= push_ico_img_ficons( ico_file, rel, ficons );
 
 		formats format = {"Microsoft Windows Icon","ICO"};
-
 		push_ico_ficon( ossICO, rel, format, size, ficons );
 
 	} catch (Exception &e) {
 		// Try pulling favicon.ico as a single image rather than a proper ICO formatted file
-/**/	std::cout << "pullICO : " << url << " : " << ico_filename << std::endl;
-
+		std::cerr << (url+ico_filename) << " not recognized as having an ICO format.\n" \
+				  << "Attempting to handle as a normal image file." << std::endl;
 		pullImg(finishURL(url + ico_filename), rel, ficons);
 	}
 }
