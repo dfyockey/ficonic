@@ -30,12 +30,18 @@
 #include "ficon.hpp"
 using namespace ficonic;
 
+///// private ////////////////////////////////////////////////////////
+
 ficon ficonfactory::make_ficon(string rel, Image image, Blob& blob) {
-	size_t width  = image.columns();
-	size_t height = image.rows();
-	ficonic::ficon f(rel, image.magick(), std::make_pair(width, height), blob);
-	return f;
+	return ficonfactory::make_ficon(
+									rel,
+									std::make_pair(image.format(), image.magick()),
+									std::make_pair(image.columns(), image.rows()),
+									blob
+						 );
 }
+
+///// public /////////////////////////////////////////////////////////
 
 ficon ficonfactory::make_ficon(string rel, Image image) {
 	Blob blob;
@@ -48,6 +54,14 @@ ficon ficonfactory::make_ficon(string rel, Blob& blob) {
 	return ficonfactory::make_ficon(rel, image, blob);
 }
 
+// Call directly only for multiple frame files (e.g. ICO format), which Magick::Image can't handle.
+// Otherwise, call indirectly through the private ficonfactory::make_ficon method.
+ficon ficonfactory::make_ficon(string rel, formats format, sizes size, Blob& blob) {
+	ficon f( rel, format, size,	blob );
+	return f;
+}
+
+// Call to generate ficons of different types (e.g. BMP, PNG) for images in a multiple frame image (e.g. ICO).
 ficon ficonfactory::make_ficon(string rel, string type, Image image) {
 	image.magick(type);
 	return ficonfactory::make_ficon(rel, image);

@@ -38,15 +38,18 @@ using namespace Magick;
 using std::string;
 
 namespace ficonic {
+	typedef std::pair<string, string> formats;
+	typedef std::pair<size_t, size_t> sizes;
 
 	struct ficon {
-		ficon(string rel, string type, std::pair<size_t, size_t> size, Blob data)
-			: rel(rel), type(type), width(size.first), height(size.second), data(data) {};
-		string	rel;
-		string	type;
-		size_t	width;
-		size_t	height;
-		Blob	data;
+		ficon(string rel, formats format, sizes size, Blob data)
+			: rel(rel), type(format.first), ext(format.second), width(size.first), height(size.second), data(data) {};
+		string	rel;	// from HTML link or ficonic-defined for root directory icons
+		string	type;	// long form icon format	// FIXME: Change to type from HTML link
+		string	ext;	// short form icon format (i.e. extension)
+		size_t	width;	// icon width
+		size_t	height; // icon height
+		Blob	data;	// icon data
 	};
 
 	typedef std::vector<struct ficon> ficonvector;
@@ -57,8 +60,13 @@ namespace ficonic {
 	public:
 		static ficon make_ficon(string rel, Image image);
 		static ficon make_ficon(string rel, Blob& blob);
-		static ficon make_ficon(string rel, string type, Image image);
+		static ficon make_ficon(string rel, formats format, sizes size, Blob& blob);	// 1,2
+		static ficon make_ficon(string rel, string type, Image image);					// 3
 	};
 }
+
+// 1 - Call directly only for multiple frame files (e.g. ICO format), which Magick::Image can't handle.
+// 2 - Otherwise, call indirectly through the private ficonfactory::make_ficon method.
+// 3 - Call to generate ficons of different types (e.g. BMP, PNG) for images in a multiple frame file (e.g. ICO).
 
 #endif /* SRC_FICON_HPP_ */
