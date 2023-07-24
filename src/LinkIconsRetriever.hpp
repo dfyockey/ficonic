@@ -35,7 +35,7 @@
 
 using namespace htmlcxx;
 
-class LinkIconsRetriever : IconsRetriever {
+class LinkIconsRetriever : virtual IconsRetriever {
 private:
 	typedef tree<HTML::Node>::iterator nodeItr;
 
@@ -57,8 +57,8 @@ private:
 
 public:
 	LinkIconsRetriever();
-	void pull(string url, ficonvector& ficons);
 	virtual ~LinkIconsRetriever();
+	void pull(string url, ficonvector& ficons);
 };
 
 #endif /* SRC_LINKICONSRETRIEVER_HPP_ */

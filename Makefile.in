@@ -109,7 +109,8 @@ am_ficonic_OBJECTS = src/ficonic-Curler.$(OBJEXT) \
 	src/ficonic-main.$(OBJEXT) src/ficonic-ficon.$(OBJEXT) \
 	src/ficonic-IconsRetriever.$(OBJEXT) \
 	src/ficonic-RootIconsRetriever.$(OBJEXT) \
-	src/ficonic-LinkIconsRetriever.$(OBJEXT)
+	src/ficonic-LinkIconsRetriever.$(OBJEXT) \
+	src/ficonic-MetaIconsRetriever.$(OBJEXT)
 ficonic_OBJECTS = $(am_ficonic_OBJECTS)
 ficonic_LDADD = $(LDADD)
 ficonic_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(ficonic_LDFLAGS) \
@@ -132,6 +133,7 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = src/$(DEPDIR)/ficonic-Curler.Po \
 	src/$(DEPDIR)/ficonic-IconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po \
+	src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-RootIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-ficon.Po src/$(DEPDIR)/ficonic-main.Po
 am__mv = mv -f
@@ -328,7 +330,9 @@ ficonic_SOURCES = \
 	src/RootIconsRetriever.cpp \
 	src/RootIconsRetriever.hpp \
 	src/LinkIconsRetriever.cpp \
-	src/LinkIconsRetriever.hpp
+	src/LinkIconsRetriever.hpp \
+	src/MetaIconsRetriever.cpp \
+	src/MetaIconsRetriever.hpp
 
 ficonic_CPPFLAGS = \
 	-I/usr/include/ImageMagick-6 \
@@ -450,6 +454,8 @@ src/ficonic-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-LinkIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/ficonic-MetaIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 
 ficonic$(EXEEXT): $(ficonic_OBJECTS) $(ficonic_DEPENDENCIES) $(EXTRA_ficonic_DEPENDENCIES) 
 	@rm -f ficonic$(EXEEXT)
@@ -465,6 +471,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-Curler.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-IconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-RootIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-ficon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-main.Po@am__quote@ # am--include-marker
@@ -574,6 +581,20 @@ src/ficonic-LinkIconsRetriever.obj: src/LinkIconsRetriever.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/LinkIconsRetriever.cpp' object='src/ficonic-LinkIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-LinkIconsRetriever.obj `if test -f 'src/LinkIconsRetriever.cpp'; then $(CYGPATH_W) 'src/LinkIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/LinkIconsRetriever.cpp'; fi`
+
+src/ficonic-MetaIconsRetriever.o: src/MetaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-MetaIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-MetaIconsRetriever.Tpo -c -o src/ficonic-MetaIconsRetriever.o `test -f 'src/MetaIconsRetriever.cpp' || echo '$(srcdir)/'`src/MetaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-MetaIconsRetriever.Tpo src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/MetaIconsRetriever.cpp' object='src/ficonic-MetaIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-MetaIconsRetriever.o `test -f 'src/MetaIconsRetriever.cpp' || echo '$(srcdir)/'`src/MetaIconsRetriever.cpp
+
+src/ficonic-MetaIconsRetriever.obj: src/MetaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-MetaIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/ficonic-MetaIconsRetriever.Tpo -c -o src/ficonic-MetaIconsRetriever.obj `if test -f 'src/MetaIconsRetriever.cpp'; then $(CYGPATH_W) 'src/MetaIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/MetaIconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-MetaIconsRetriever.Tpo src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/MetaIconsRetriever.cpp' object='src/ficonic-MetaIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-MetaIconsRetriever.obj `if test -f 'src/MetaIconsRetriever.cpp'; then $(CYGPATH_W) 'src/MetaIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/MetaIconsRetriever.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -853,6 +874,7 @@ distclean: distclean-am
 		-rm -f src/$(DEPDIR)/ficonic-Curler.Po
 	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po
@@ -906,6 +928,7 @@ maintainer-clean: maintainer-clean-am
 		-rm -f src/$(DEPDIR)/ficonic-Curler.Po
 	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po

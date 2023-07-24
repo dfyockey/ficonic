@@ -1,7 +1,7 @@
 /*
- * RootIconsRetriever.hpp
+ * MetaIconsRetriever.cpp
  *
- *  Created on: Jun 16, 2023
+ *  Created on: Jul 24, 2023
  *      Author: David Yockey
  *
  * MIT License
@@ -27,26 +27,17 @@
  * SOFTWARE.
  */
 
-#ifndef SRC_ROOTICONSRETRIEVER_HPP_
-#define SRC_ROOTICONSRETRIEVER_HPP_
+#include "MetaIconsRetriever.hpp"
 
-#include "Curler.h"
-#include <map>
-#include <string>
-#include "ficon.hpp"
-#include "IconsRetriever.hpp"
+///// public /////////////////////////////////////////////////////////
 
-using namespace ficonic;
-using std::string;
+MetaIconsRetriever::MetaIconsRetriever() : IconsRetriever()  {
+}
 
-class RootIconsRetriever : virtual IconsRetriever {
-private:
-	void pullFavicon	(string url, ficonvector& ficons);
-	void pullAppleicon	(string url, ficonvector& ficons);
-public:
-	RootIconsRetriever();
-	virtual ~RootIconsRetriever();
-	void pull(string url, ficonvector& ficons);
-};
+MetaIconsRetriever::~MetaIconsRetriever() {
+}
 
-#endif /* SRC_ROOTICONSRETRIEVER_HPP_ */
+void MetaIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
+	// TODO Implement pull operation
+}
+

@@ -61,6 +61,7 @@ public:
 	IconsRetriever();
 	virtual ~IconsRetriever();
 	void pullIcon (string url, string rel, ficonvector& ficons, string filename="");
+	virtual void pull(string url, ficonvector& ficons) = 0;
 };
 
 #endif /* SRC_ICONSRETRIEVER_HPP_ */
