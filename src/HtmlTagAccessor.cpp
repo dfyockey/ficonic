@@ -1,7 +1,7 @@
 /*
- * MetaIconsRetriever.cpp
+ * HtmlTagAccessor.cpp
  *
- *  Created on: Jul 24, 2023
+ *  Created on: Jul 25, 2023
  *      Author: David Yockey
  *
  * MIT License
@@ -27,17 +27,22 @@
  * SOFTWARE.
  */
 
-#include "MetaIconsRetriever.hpp"
+#include "HtmlTagAccessor.hpp"
 
-///// public /////////////////////////////////////////////////////////
+HtmlTagAccessor::HtmlTagAccessor() : Curler() {
+	// TODO Auto-generated constructor stub
 
-MetaIconsRetriever::MetaIconsRetriever() : IconsRetriever(), HtmlTagAccessor() {
 }
 
-MetaIconsRetriever::~MetaIconsRetriever() {
+HtmlTagAccessor::~HtmlTagAccessor() {
+	// TODO Auto-generated destructor stub
 }
 
-void MetaIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
-	// TODO Implement pull operation
+void HtmlTagAccessor::pull(string url, string& htmlref) {
+	if (url != prev_url || html.empty()) {
+		Curler::pull(url, html);
+		prev_url = url;
+		htmlref = html;
+	}
 }
 

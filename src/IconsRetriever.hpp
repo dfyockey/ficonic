@@ -39,7 +39,7 @@ using namespace ficonic;
 // The `rel` arguments provided in the following class's methods should
 // be from or have a meaning equivalent to `rel` attributes in HTML link tags.
 
-class IconsRetriever {
+class IconsRetriever : protected virtual Curler {
 private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
 	bool	notSubStr	(string str, int pos, int count, string cmp );
@@ -53,14 +53,13 @@ private:
 	void	push_ico_ficon		(ostringstream& ossICO, string rel, formats format, sizes size, ficonvector& ficons);
 	void	pullICO				(string url, string rel, ficonvector& ficons, string filename);
 protected:
-	Curler curl;
 	string	str_tolower			(string s);
 	bool 	noHttpProtocol		(string url);
 	string	clipLeadingSlash	(string url);
+	void pullIcon (string url, string rel, ficonvector& ficons, string filename="");
 public:
 	IconsRetriever();
 	virtual ~IconsRetriever();
-	void pullIcon (string url, string rel, ficonvector& ficons, string filename="");
 	virtual void pull(string url, ficonvector& ficons) = 0;
 };
 

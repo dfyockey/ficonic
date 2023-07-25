@@ -31,8 +31,9 @@
 #define SRC_METAICONSRETRIEVER_HPP_
 
 #include "IconsRetriever.hpp"
+#include "HtmlTagAccessor.hpp"
 
-class MetaIconsRetriever : virtual IconsRetriever {
+class MetaIconsRetriever : virtual IconsRetriever, virtual HtmlTagAccessor {
 public:
 	MetaIconsRetriever();
 	virtual ~MetaIconsRetriever();

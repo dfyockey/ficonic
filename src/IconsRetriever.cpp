@@ -84,7 +84,7 @@ void IconsRetriever::pullImg(string url, string rel, ficonvector& ficons) {
 		url = finishURL(url);
 /**/	std::cout << "Pulling Img " << url << std::endl;
 		ostringstream ossLinkIcon;
-		curl.pull( url , ossLinkIcon );
+		Curler::pull( url , ossLinkIcon );
 		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
 		ficons.push_back( ficonfactory::make_ficon(rel, blob) );
 	} catch (Exception &e) {
@@ -144,7 +144,7 @@ void IconsRetriever::pullICO(string url, string rel, ficonvector& ficons, string
 	try {
 		// Pull to an ostringstream rather than a filestream to facilitate later saving to a ficon's blob
 		ostringstream ossICO;
-		curl.pull( url + ico_filename, ossICO );
+		Curler::pull( url + ico_filename, ossICO );
 
 		// Saving an ICO format icon to a file is needed here because Magick::readImages in
 		// push_ico_img_ficons can't handle reading an ICO format file from a Magick::Blob.
@@ -164,7 +164,7 @@ void IconsRetriever::pullICO(string url, string rel, ficonvector& ficons, string
 
 ///// public /////////////////////////////////////////////////////////
 
-IconsRetriever::IconsRetriever() : curl(&httpHeaderFields) {
+IconsRetriever::IconsRetriever() : Curler(&httpHeaderFields) {
 }
 
 IconsRetriever::~IconsRetriever() {

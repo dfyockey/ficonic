@@ -77,18 +77,14 @@ void LinkIconsRetriever::getLinkIconTags(ficonvector& ficons) {
 
 ///// public /////////////////////////////////////////////////////////
 
-LinkIconsRetriever::LinkIconsRetriever() : IconsRetriever() {
+LinkIconsRetriever::LinkIconsRetriever() : IconsRetriever(), HtmlTagAccessor() {
 }
 
 void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
-/**/cout << "start pull..." << flush;
+	HtmlTagAccessor::pull(url, html);
 
-	siteurl = url;
-	curl.pull(siteurl, html);
-
-/**/cout << "end pull" << endl;
-/**/cout << "Effective URL = " << curl.effective_url() << endl;
-	pulledsite_url = curl.effective_url();
+/**/cout << "Effective URL = " << Curler::effective_url() << endl;
+	pulledsite_url = Curler::effective_url();
 
 	getLinkIconTags(ficons);
 }

@@ -16,7 +16,9 @@ ficonic_SOURCES = \
 	src/LinkIconsRetriever.cpp \
 	src/LinkIconsRetriever.hpp \
 	src/MetaIconsRetriever.cpp \
-	src/MetaIconsRetriever.hpp
+	src/MetaIconsRetriever.hpp \
+	src/HtmlTagAccessor.cpp \
+	src/HtmlTagAccessor.hpp
 	
 	
 ficonic_CPPFLAGS =	\

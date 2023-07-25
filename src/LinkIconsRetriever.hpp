@@ -32,10 +32,11 @@
 
 #include <htmlcxx/html/ParserDom.h>
 #include "IconsRetriever.hpp"
+#include "HtmlTagAccessor.hpp"
 
 using namespace htmlcxx;
 
-class LinkIconsRetriever : virtual IconsRetriever {
+class LinkIconsRetriever : virtual IconsRetriever, HtmlTagAccessor {
 private:
 	typedef tree<HTML::Node>::iterator nodeItr;
 
