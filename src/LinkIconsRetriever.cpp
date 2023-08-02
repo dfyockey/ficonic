@@ -28,48 +28,24 @@ using std::flush;
 
 ///// private ////////////////////////////////////////////////////////
 
-string LinkIconsRetriever::getAttrText(nodeItr itr, string attr) {
-	return itr->attribute(attr).second;
-}
-
-void LinkIconsRetriever::procLinkIconTag(nodeItr itr, ficonvector& ficons) {
+void LinkIconsRetriever::procIconTag(nodeItr itr, ficonvector& ficons) {
 	itr->parseAttributes();
-	std::cout << "procLinkIconTag : " << getAttrText(itr, "href") << std::endl;
 	string rel = getAttrText(itr, "rel");
+
 	if (rels.find(rel) != rels.end()) {
 		string url = getAttrText(itr, "href");
+
 		if( noHttpProtocol(url) ) {
 			url = pulledsite_url + clipLeadingSlash(url);
 		}
-		std::cout << "procLinkIconTag url : " << url << std::endl;
+
 		pullIcon(url, rel, ficons);
-	}
-}
-
-void LinkIconsRetriever::getLinkIconTags(ficonvector& ficons) {
-	HTML::ParserDom parser;
-
-/**/cout << "start html parsing..." << flush;
-
-	tree<HTML::Node> dom = parser.parseTree(html);
-
-/**/cout << "end html parsing" << endl;
-
-	nodeItr domItr = dom.begin();
-	nodeItr domEnd = dom.end();
-
-	while (domItr != domEnd ) {
-
-		if ( str_tolower( domItr->tagName().c_str() ) == "link"  ) {
-			procLinkIconTag(domItr, ficons);
-		}
-		++domItr;
 	}
 }
 
 ///// public /////////////////////////////////////////////////////////
 
-LinkIconsRetriever::LinkIconsRetriever() : IconsRetriever(), HtmlTagAccessor() {
+LinkIconsRetriever::LinkIconsRetriever() : HtmlTagAccessor() {
 }
 
 void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
@@ -78,7 +54,7 @@ void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
 /**/cout << "Effective URL = " << Curler::effective_url() << endl;
 	pulledsite_url = Curler::effective_url();
 
-	getLinkIconTags(ficons);
+	getIconTags("link", ficons);
 }
 
 LinkIconsRetriever::~LinkIconsRetriever() {

@@ -21,7 +21,34 @@
 
 #include "HtmlTagAccessor.hpp"
 
-HtmlTagAccessor::HtmlTagAccessor() : Curler() {
+///// private ////////////////////////////////////////////////////////
+
+///// protected //////////////////////////////////////////////////////
+
+string HtmlTagAccessor::getAttrText(nodeItr itr, string attr) {
+	return itr->attribute(attr).second;
+}
+
+void HtmlTagAccessor::getIconTags(string tagtype, ficonic::ficonvector& ficons) {
+	HTML::ParserDom parser;
+
+	tree<HTML::Node> dom = parser.parseTree(html);
+
+	nodeItr domItr = dom.begin();
+	nodeItr domEnd = dom.end();
+
+	while (domItr != domEnd ) {
+
+		if ( str_tolower( domItr->tagName().c_str() ) == tagtype  ) {
+			procIconTag(domItr, ficons);
+		}
+		++domItr;
+	}
+}
+
+///// public /////////////////////////////////////////////////////////
+
+HtmlTagAccessor::HtmlTagAccessor() : IconsRetriever() {
 	// TODO Auto-generated constructor stub
 
 }
@@ -34,7 +61,7 @@ void HtmlTagAccessor::pull(string url, string& htmlref) {
 	if (url != prev_url || html.empty()) {
 		Curler::pull(url, html);
 		prev_url = url;
-		htmlref = html;
 	}
+	htmlref = html;
 }
 

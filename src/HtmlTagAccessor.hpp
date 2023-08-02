@@ -22,22 +22,28 @@
 #ifndef SRC_HTMLTAGACCESSOR_HPP_
 #define SRC_HTMLTAGACCESSOR_HPP_
 
-#include "Curler.h"
+#include "IconsRetriever.hpp"
+#include <htmlcxx/html/ParserDom.h>
 #include <string>
+#include "ficon.hpp"
 
+using namespace htmlcxx;
 using std::string;
 
-class HtmlTagAccessor : protected virtual Curler {
+class HtmlTagAccessor : virtual protected IconsRetriever {
+protected:
+	typedef tree<HTML::Node>::iterator nodeItr;
 private:
 	string html;
 	string prev_url;
+protected:
+	string getAttrText(nodeItr itr, string attr);
+	virtual void procIconTag(nodeItr itr, ficonvector& ficons) = 0;
+	void getIconTags(string tagtype, ficonic::ficonvector& ficons);
 public:
 	HtmlTagAccessor();
 	virtual ~HtmlTagAccessor();
 	void pull(string url, string& htmlref);
 };
-
-//string HtmlTagAccessor::html = "";
-//string HtmlTagAccessor::prev_url = "";
 
 #endif /* SRC_HTMLTAGACCESSOR_HPP_ */

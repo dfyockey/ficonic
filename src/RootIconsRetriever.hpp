@@ -22,7 +22,6 @@
 #ifndef SRC_ROOTICONSRETRIEVER_HPP_
 #define SRC_ROOTICONSRETRIEVER_HPP_
 
-#include "Curler.h"
 #include <map>
 #include <string>
 #include "ficon.hpp"

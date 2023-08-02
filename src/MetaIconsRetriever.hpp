@@ -25,7 +25,19 @@
 #include "IconsRetriever.hpp"
 #include "HtmlTagAccessor.hpp"
 
-class MetaIconsRetriever : virtual IconsRetriever, virtual HtmlTagAccessor {
+class MetaIconsRetriever : virtual private HtmlTagAccessor {
+private:
+	string html;
+
+	std::set<string> names = {
+			"msapplication-TileImage",
+			"msapplication-config"
+	};
+
+	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
+
+	void procIconTag(nodeItr itr, ficonvector& ficons);
+
 public:
 	MetaIconsRetriever();
 	virtual ~MetaIconsRetriever();

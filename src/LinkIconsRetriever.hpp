@@ -28,10 +28,8 @@
 
 using namespace htmlcxx;
 
-class LinkIconsRetriever : virtual IconsRetriever, HtmlTagAccessor {
+class LinkIconsRetriever : virtual private HtmlTagAccessor {
 private:
-	typedef tree<HTML::Node>::iterator nodeItr;
-
 	string html;
 
 	std::set<string> rels = {
@@ -41,12 +39,9 @@ private:
 			"alternate icon"													// From https://github.com, rel value referring to a PNG alternate to an SVG
 	};
 
-	string siteurl;
 	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
-	string	getAttrText		(nodeItr itr, string attr);
-	void	procLinkIconTag	(nodeItr itr, ficonvector& ficons);
-	void	getLinkIconTags	(ficonvector& ficons);
+	void procIconTag (nodeItr itr, ficonvector& ficons);
 
 public:
 	LinkIconsRetriever();

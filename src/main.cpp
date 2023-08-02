@@ -27,6 +27,7 @@
 #include <Magick++.h>
 #include "RootIconsRetriever.hpp"
 #include "LinkIconsRetriever.hpp"
+#include "MetaIconsRetriever.hpp"
 #include "program_info.h"
 #include "ficon.hpp"
 
@@ -110,6 +111,9 @@ int execMain (bpo::variables_map& vm) {
 
 	LinkIconsRetriever linkiconsRetriever;
 	linkiconsRetriever.pull(url, ficons);
+
+	MetaIconsRetriever metaiconsRetriever;
+	metaiconsRetriever.pull(url, ficons);
 
 	save_icons(ficons, dir);
 

@@ -36,7 +36,6 @@ private:
 	fieldsmap httpHeaderFields = { {CURLOPT_USERAGENT, PROGNAME} };
 	bool	notSubStr	(string str, int pos, int count, string cmp );
 	string	finishURL	(string url);
-	string	getExt		(string file);
 	void	pullImg		(string url, string rel, ficonvector& ficons);
 	void	pullImg		(string url, string rel, ficonvector& ficons, string filename);
 
@@ -46,6 +45,7 @@ private:
 	void	pullICO				(string url, string rel, ficonvector& ficons, string filename);
 protected:
 	string	str_tolower			(string s);
+	string	getExt				(string file);
 	bool 	noHttpProtocol		(string url);
 	string	clipLeadingSlash	(string url);
 	void pullIcon (string url, string rel, ficonvector& ficons, string filename="");
