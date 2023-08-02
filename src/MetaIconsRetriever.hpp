@@ -1,7 +1,7 @@
 /*
- * LinkIconsRetriever.h
+ * MetaIconsRetriever.hpp
  *
- *  Created on: Jun 27, 2023
+ *  Created on: Jul 24, 2023
  *      Author: David Yockey
  *
  * Copyright © 2023 David Yockey
@@ -19,34 +19,29 @@
  * limitations under the License.
  */
 
-#ifndef SRC_LINKICONSRETRIEVER_HPP_
-#define SRC_LINKICONSRETRIEVER_HPP_
+#ifndef SRC_METAICONSRETRIEVER_HPP_
+#define SRC_METAICONSRETRIEVER_HPP_
 
-#include <htmlcxx/html/ParserDom.h>
 #include "IconsRetriever.hpp"
 #include "HtmlTagAccessor.hpp"
 
-using namespace htmlcxx;
-
-class LinkIconsRetriever : virtual private HtmlTagAccessor {
+class MetaIconsRetriever : virtual private HtmlTagAccessor {
 private:
 	string html;
 
-	std::set<string> rels = {
-			"icon",																// HTML5 Standard rel value
-			"shortcut icon",													// HTML5 Standard rel value acceptable for historical reasons
-			"mask-icon", "apple-touch-icon", "apple-touch-icon-precomposed",	// Apple-related rel values
-			"alternate icon"													// From https://github.com, rel value referring to a PNG alternate to an SVG
+	std::set<string> names = {
+			"msapplication-TileImage",
+			"msapplication-config"
 	};
 
 	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
-	void procIconTag (nodeItr itr, ficonvector& ficons);
+	void procIconTag(nodeItr itr, ficonvector& ficons);
 
 public:
-	LinkIconsRetriever();
-	virtual ~LinkIconsRetriever();
+	MetaIconsRetriever();
+	virtual ~MetaIconsRetriever();
 	void pull(string url, ficonvector& ficons);
 };
 
-#endif /* SRC_LINKICONSRETRIEVER_HPP_ */
+#endif /* SRC_METAICONSRETRIEVER_HPP_ */

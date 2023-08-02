@@ -14,7 +14,12 @@ ficonic_SOURCES = \
 	src/RootIconsRetriever.cpp \
 	src/RootIconsRetriever.hpp \
 	src/LinkIconsRetriever.cpp \
-	src/LinkIconsRetriever.hpp
+	src/LinkIconsRetriever.hpp \
+	src/MetaIconsRetriever.cpp \
+	src/MetaIconsRetriever.hpp \
+	src/HtmlTagAccessor.cpp \
+	src/HtmlTagAccessor.hpp
+	
 	
 ficonic_CPPFLAGS =	\
 	-I/usr/include/ImageMagick-6 \

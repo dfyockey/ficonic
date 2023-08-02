@@ -1,7 +1,7 @@
 /*
- * RootIconsRetriever.hpp
+ * HtmlTagAccessor.hpp
  *
- *  Created on: Jun 16, 2023
+ *  Created on: Jul 25, 2023
  *      Author: David Yockey
  *
  * Copyright © 2023 David Yockey
@@ -19,25 +19,31 @@
  * limitations under the License.
  */
 
-#ifndef SRC_ROOTICONSRETRIEVER_HPP_
-#define SRC_ROOTICONSRETRIEVER_HPP_
+#ifndef SRC_HTMLTAGACCESSOR_HPP_
+#define SRC_HTMLTAGACCESSOR_HPP_
 
-#include <map>
+#include "IconsRetriever.hpp"
+#include <htmlcxx/html/ParserDom.h>
 #include <string>
 #include "ficon.hpp"
-#include "IconsRetriever.hpp"
 
-using namespace ficonic;
+using namespace htmlcxx;
 using std::string;
 
-class RootIconsRetriever : virtual IconsRetriever {
+class HtmlTagAccessor : virtual protected IconsRetriever {
+protected:
+	typedef tree<HTML::Node>::iterator nodeItr;
 private:
-	void pullFavicon	(string url, ficonvector& ficons);
-	void pullAppleicon	(string url, ficonvector& ficons);
+	string html;
+	string prev_url;
+protected:
+	string getAttrText(nodeItr itr, string attr);
+	virtual void procIconTag(nodeItr itr, ficonvector& ficons) = 0;
+	void getIconTags(string tagtype, ficonic::ficonvector& ficons);
 public:
-	RootIconsRetriever();
-	virtual ~RootIconsRetriever();
-	void pull(string url, ficonvector& ficons);
+	HtmlTagAccessor();
+	virtual ~HtmlTagAccessor();
+	void pull(string url, string& htmlref);
 };
 
-#endif /* SRC_ROOTICONSRETRIEVER_HPP_ */
+#endif /* SRC_HTMLTAGACCESSOR_HPP_ */

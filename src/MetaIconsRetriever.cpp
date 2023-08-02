@@ -1,7 +1,7 @@
 /*
- * LinkIconsRetriever.cpp
+ * MetaIconsRetriever.cpp
  *
- *  Created on: Jun 27, 2023
+ *  Created on: Jul 24, 2023
  *      Author: David Yockey
  *
  * Copyright © 2023 David Yockey
@@ -19,44 +19,43 @@
  * limitations under the License.
  */
 
-#include "LinkIconsRetriever.hpp"
-#include <iostream>
-
-using std::cout;
-using std::endl;
-using std::flush;
+#include "MetaIconsRetriever.hpp"
 
 ///// private ////////////////////////////////////////////////////////
 
-void LinkIconsRetriever::procIconTag(nodeItr itr, ficonvector& ficons) {
+void MetaIconsRetriever::procIconTag(nodeItr itr, ficonvector& ficons) {
 	itr->parseAttributes();
-	string rel = getAttrText(itr, "rel");
+	string name = getAttrText(itr, "name");
 
-	if (rels.find(rel) != rels.end()) {
-		string url = getAttrText(itr, "href");
+	// TODO: Add handling of tags named "msapplication-*" where '*' is
+	//       anything not otherwise found in the names set and specifies
+	//       an image file.
+	if (names.find(name) != names.end()) {
+		string url = getAttrText(itr, "content");
 
 		if( noHttpProtocol(url) ) {
 			url = pulledsite_url + clipLeadingSlash(url);
 		}
 
-		pullIcon(url, rel, ficons);
+		if (getExt(url) != ".xml") {
+			pullIcon(url, name, ficons);
+		} else {
+			// TODO: Get IE 11 Tiles for Win 8.1 Start Screen from xml file
+		}
 	}
 }
 
 ///// public /////////////////////////////////////////////////////////
 
-LinkIconsRetriever::LinkIconsRetriever() : HtmlTagAccessor() {
+MetaIconsRetriever::MetaIconsRetriever() : HtmlTagAccessor() {
 }
 
-void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
+MetaIconsRetriever::~MetaIconsRetriever() {
+}
+
+void MetaIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
 	HtmlTagAccessor::pull(url, html);
-
-/**/cout << "Effective URL = " << Curler::effective_url() << endl;
 	pulledsite_url = Curler::effective_url();
-
-	getIconTags("link", ficons);
-}
-
-LinkIconsRetriever::~LinkIconsRetriever() {
+	getIconTags("meta", ficons);
 }
 
