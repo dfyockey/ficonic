@@ -29,21 +29,59 @@
  */
 
 #include "PwaIconsRetriever.hpp"
+#include <boost/json/src.hpp>
+
+namespace bjs = boost::json;
 
 ///// private ////////////////////////////////////////////////////////
 
+
+void PwaIconsRetriever::pullManifestIcons(string manifest, string rel, ficonvector& ficons) {
+
+	bjs::value	parsed_manifest = parser.parse(manifest);
+	bjs::array	icons( parsed_manifest.at("icons").as_array() );
+	string		imgurl;
+
+	for (auto icon : icons) {
+		imgurl = icon.at("src").as_string();
+
+		if ( noHttpProtocol(imgurl) ) {
+			imgurl = pulledsite_url + clipLeadingSlash(imgurl);
+		}
+
+		pullIcon(imgurl, rel, ficons);
+	}
+}
+
 void PwaIconsRetriever::procIconTag(nodeItr itr, ficonvector& ficons) {
-	// TODO: Implement procIconTag method
+	itr->parseAttributes();
+	string rel = getAttrText(itr, "rel");
+
+	if (rel == this->rel) {
+		string manifest_url = getAttrText(itr, "href");
+
+		if ( noHttpProtocol(manifest_url) ) {
+			manifest_url = pulledsite_url + clipLeadingSlash(manifest_url);
+		}
+
+		string manifest;
+		Curler::pull(manifest_url, manifest);
+		pullManifestIcons(manifest, rel, ficons);
+	}
 }
 
 ///// public /////////////////////////////////////////////////////////
 
-PwaIconsRetriever::PwaIconsRetriever() : HtmlTagAccessor() {
+PwaIconsRetriever::PwaIconsRetriever() : HtmlTagAccessor(), parser() {
 }
 
 PwaIconsRetriever::~PwaIconsRetriever() {
 }
 
 void PwaIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
-	// TODO: Implement pull method
+	HtmlTagAccessor::pull(url, html);
+
+	pulledsite_url = Curler::effective_url();
+
+	getIconTags("link", ficons);
 }

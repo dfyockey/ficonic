@@ -34,10 +34,25 @@
 #include <string>
 #include "ficon.hpp"
 #include "HtmlTagAccessor.hpp"
+#include "Parser.hpp"
 
 class PwaIconsRetriever : private virtual HtmlTagAccessor {
 private:
-	void procIconTag(nodeItr itr, ficonvector& ficons);
+	string html;
+	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
+
+	/*
+	 * If other `rel` values are later found to be used, it is recommended to reimplement the following
+	 * as `std::set<std::string> rels` in the same manner as in other IconsRetriever derivatives and to
+	 * modify procIconTag accordingly.
+	 */
+	const string rel = "manifest";
+
+	Parser parser;
+
+	void pullManifestIcons	(string manifest, string rel, ficonvector& ficons);
+	void procIconTag		(nodeItr itr, ficonvector& ficons);
+
 public:
 	PwaIconsRetriever();
 	virtual ~PwaIconsRetriever();
