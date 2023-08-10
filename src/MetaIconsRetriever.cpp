@@ -27,9 +27,6 @@ void MetaIconsRetriever::procIconTag(nodeItr itr, ficonvector& ficons) {
 	itr->parseAttributes();
 	string name = getAttrText(itr, "name");
 
-	// TODO: Add handling of tags named "msapplication-*" where '*' is
-	//       anything not otherwise found in the names set and specifies
-	//       an image file.
 	if (names.find(name) != names.end()) {
 		string url = getAttrText(itr, "content");
 

@@ -31,6 +31,10 @@ private:
 
 	std::set<string> names = {
 			"msapplication-TileImage",
+			"msapplication-square70x70logo",
+			"msapplication-square150x150logo",
+			"msapplication-wide310x150logo",
+			"msapplication-square310x310logo",
 			"msapplication-config"
 	};
 
