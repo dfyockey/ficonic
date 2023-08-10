@@ -40,7 +40,8 @@ private:
 
 	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
-	void procIconTag(nodeItr itr, ficonvector& ficons);
+	void procTilesXML	(string url,  ficonvector& ficons);
+	void procIconTag	(nodeItr itr, ficonvector& ficons);
 
 public:
 	MetaIconsRetriever();

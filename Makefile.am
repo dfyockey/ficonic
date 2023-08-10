@@ -18,12 +18,14 @@ ficonic_SOURCES = \
 	src/MetaIconsRetriever.cpp \
 	src/MetaIconsRetriever.hpp \
 	src/HtmlTagAccessor.cpp \
-	src/HtmlTagAccessor.hpp
-	
+	src/HtmlTagAccessor.hpp \
+	src/xerces/XercesCPP.cpp \
+	src/xerces/XercesCPP.hpp
 	
 ficonic_CPPFLAGS =	\
 	-I/usr/include/ImageMagick-6 \
-	-I/usr/include/htmlcxx/html
+	-I/usr/include/htmlcxx/html \
+	-I/usr/include/xercesc
 
 ficonic_LDFLAGS = \
 	`Magick++-config --cppflags --cxxflags --ldflags --libs`
