@@ -28,6 +28,7 @@
 #include "RootIconsRetriever.hpp"
 #include "LinkIconsRetriever.hpp"
 #include "MetaIconsRetriever.hpp"
+#include "PwaIconsRetriever.hpp"
 #include "program_info.h"
 #include "ficon.hpp"
 
@@ -114,6 +115,9 @@ int execMain (bpo::variables_map& vm) {
 
 	MetaIconsRetriever metaiconsRetriever;
 	metaiconsRetriever.pull(url, ficons);
+
+	PwaIconsRetriever pwaiconsRetriever;
+	pwaiconsRetriever.pull(url, ficons);
 
 	save_icons(ficons, dir);
 

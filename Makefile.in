@@ -107,11 +107,13 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_ficonic_OBJECTS = src/ficonic-Curler.$(OBJEXT) \
 	src/ficonic-main.$(OBJEXT) src/ficonic-ficon.$(OBJEXT) \
+	src/ficonic-Parser.$(OBJEXT) \
 	src/ficonic-IconsRetriever.$(OBJEXT) \
+	src/ficonic-HtmlTagAccessor.$(OBJEXT) \
 	src/ficonic-RootIconsRetriever.$(OBJEXT) \
 	src/ficonic-LinkIconsRetriever.$(OBJEXT) \
 	src/ficonic-MetaIconsRetriever.$(OBJEXT) \
-	src/ficonic-HtmlTagAccessor.$(OBJEXT)
+	src/ficonic-PwaIconsRetriever.$(OBJEXT)
 ficonic_OBJECTS = $(am_ficonic_OBJECTS)
 ficonic_LDADD = $(LDADD)
 ficonic_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(ficonic_LDFLAGS) \
@@ -136,6 +138,8 @@ am__depfiles_remade = src/$(DEPDIR)/ficonic-Curler.Po \
 	src/$(DEPDIR)/ficonic-IconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po \
+	src/$(DEPDIR)/ficonic-Parser.Po \
+	src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-RootIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-ficon.Po src/$(DEPDIR)/ficonic-main.Po
 am__mv = mv -f
@@ -321,22 +325,26 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
 ficonic_SOURCES = \
+	src/program_info.h \
 	src/Curler.cpp \
 	src/Curler.h \
 	src/main.cpp \
 	src/ficon.cpp \
 	src/ficon.hpp \
-	src/program_info.h \
+	src/Parser.cpp \
+	src/Parser.hpp \
 	src/IconsRetriever.cpp \
 	src/IconsRetriever.hpp \
+	src/HtmlTagAccessor.cpp \
+	src/HtmlTagAccessor.hpp \
 	src/RootIconsRetriever.cpp \
 	src/RootIconsRetriever.hpp \
 	src/LinkIconsRetriever.cpp \
 	src/LinkIconsRetriever.hpp \
 	src/MetaIconsRetriever.cpp \
 	src/MetaIconsRetriever.hpp \
-	src/HtmlTagAccessor.cpp \
-	src/HtmlTagAccessor.hpp
+	src/PwaIconsRetriever.cpp \
+	src/PwaIconsRetriever.hpp
 
 ficonic_CPPFLAGS = \
 	-I/usr/include/ImageMagick-6 \
@@ -452,7 +460,11 @@ src/ficonic-main.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-ficon.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/ficonic-Parser.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-IconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+src/ficonic-HtmlTagAccessor.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-RootIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
@@ -460,7 +472,7 @@ src/ficonic-LinkIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-MetaIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
-src/ficonic-HtmlTagAccessor.$(OBJEXT): src/$(am__dirstamp) \
+src/ficonic-PwaIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 
 ficonic$(EXEEXT): $(ficonic_OBJECTS) $(ficonic_DEPENDENCIES) $(EXTRA_ficonic_DEPENDENCIES) 
@@ -479,6 +491,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-IconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-Parser.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-RootIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-ficon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-main.Po@am__quote@ # am--include-marker
@@ -547,6 +561,20 @@ src/ficonic-ficon.obj: src/ficon.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-ficon.obj `if test -f 'src/ficon.cpp'; then $(CYGPATH_W) 'src/ficon.cpp'; else $(CYGPATH_W) '$(srcdir)/src/ficon.cpp'; fi`
 
+src/ficonic-Parser.o: src/Parser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-Parser.o -MD -MP -MF src/$(DEPDIR)/ficonic-Parser.Tpo -c -o src/ficonic-Parser.o `test -f 'src/Parser.cpp' || echo '$(srcdir)/'`src/Parser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-Parser.Tpo src/$(DEPDIR)/ficonic-Parser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Parser.cpp' object='src/ficonic-Parser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-Parser.o `test -f 'src/Parser.cpp' || echo '$(srcdir)/'`src/Parser.cpp
+
+src/ficonic-Parser.obj: src/Parser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-Parser.obj -MD -MP -MF src/$(DEPDIR)/ficonic-Parser.Tpo -c -o src/ficonic-Parser.obj `if test -f 'src/Parser.cpp'; then $(CYGPATH_W) 'src/Parser.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Parser.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-Parser.Tpo src/$(DEPDIR)/ficonic-Parser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/Parser.cpp' object='src/ficonic-Parser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-Parser.obj `if test -f 'src/Parser.cpp'; then $(CYGPATH_W) 'src/Parser.cpp'; else $(CYGPATH_W) '$(srcdir)/src/Parser.cpp'; fi`
+
 src/ficonic-IconsRetriever.o: src/IconsRetriever.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-IconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-IconsRetriever.Tpo -c -o src/ficonic-IconsRetriever.o `test -f 'src/IconsRetriever.cpp' || echo '$(srcdir)/'`src/IconsRetriever.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-IconsRetriever.Tpo src/$(DEPDIR)/ficonic-IconsRetriever.Po
@@ -560,6 +588,20 @@ src/ficonic-IconsRetriever.obj: src/IconsRetriever.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/IconsRetriever.cpp' object='src/ficonic-IconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-IconsRetriever.obj `if test -f 'src/IconsRetriever.cpp'; then $(CYGPATH_W) 'src/IconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/IconsRetriever.cpp'; fi`
+
+src/ficonic-HtmlTagAccessor.o: src/HtmlTagAccessor.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-HtmlTagAccessor.o -MD -MP -MF src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo -c -o src/ficonic-HtmlTagAccessor.o `test -f 'src/HtmlTagAccessor.cpp' || echo '$(srcdir)/'`src/HtmlTagAccessor.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo src/$(DEPDIR)/ficonic-HtmlTagAccessor.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/HtmlTagAccessor.cpp' object='src/ficonic-HtmlTagAccessor.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-HtmlTagAccessor.o `test -f 'src/HtmlTagAccessor.cpp' || echo '$(srcdir)/'`src/HtmlTagAccessor.cpp
+
+src/ficonic-HtmlTagAccessor.obj: src/HtmlTagAccessor.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-HtmlTagAccessor.obj -MD -MP -MF src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo -c -o src/ficonic-HtmlTagAccessor.obj `if test -f 'src/HtmlTagAccessor.cpp'; then $(CYGPATH_W) 'src/HtmlTagAccessor.cpp'; else $(CYGPATH_W) '$(srcdir)/src/HtmlTagAccessor.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo src/$(DEPDIR)/ficonic-HtmlTagAccessor.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/HtmlTagAccessor.cpp' object='src/ficonic-HtmlTagAccessor.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-HtmlTagAccessor.obj `if test -f 'src/HtmlTagAccessor.cpp'; then $(CYGPATH_W) 'src/HtmlTagAccessor.cpp'; else $(CYGPATH_W) '$(srcdir)/src/HtmlTagAccessor.cpp'; fi`
 
 src/ficonic-RootIconsRetriever.o: src/RootIconsRetriever.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-RootIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-RootIconsRetriever.Tpo -c -o src/ficonic-RootIconsRetriever.o `test -f 'src/RootIconsRetriever.cpp' || echo '$(srcdir)/'`src/RootIconsRetriever.cpp
@@ -603,19 +645,19 @@ src/ficonic-MetaIconsRetriever.obj: src/MetaIconsRetriever.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-MetaIconsRetriever.obj `if test -f 'src/MetaIconsRetriever.cpp'; then $(CYGPATH_W) 'src/MetaIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/MetaIconsRetriever.cpp'; fi`
 
-src/ficonic-HtmlTagAccessor.o: src/HtmlTagAccessor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-HtmlTagAccessor.o -MD -MP -MF src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo -c -o src/ficonic-HtmlTagAccessor.o `test -f 'src/HtmlTagAccessor.cpp' || echo '$(srcdir)/'`src/HtmlTagAccessor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo src/$(DEPDIR)/ficonic-HtmlTagAccessor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/HtmlTagAccessor.cpp' object='src/ficonic-HtmlTagAccessor.o' libtool=no @AMDEPBACKSLASH@
+src/ficonic-PwaIconsRetriever.o: src/PwaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-PwaIconsRetriever.o -MD -MP -MF src/$(DEPDIR)/ficonic-PwaIconsRetriever.Tpo -c -o src/ficonic-PwaIconsRetriever.o `test -f 'src/PwaIconsRetriever.cpp' || echo '$(srcdir)/'`src/PwaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-PwaIconsRetriever.Tpo src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PwaIconsRetriever.cpp' object='src/ficonic-PwaIconsRetriever.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-HtmlTagAccessor.o `test -f 'src/HtmlTagAccessor.cpp' || echo '$(srcdir)/'`src/HtmlTagAccessor.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-PwaIconsRetriever.o `test -f 'src/PwaIconsRetriever.cpp' || echo '$(srcdir)/'`src/PwaIconsRetriever.cpp
 
-src/ficonic-HtmlTagAccessor.obj: src/HtmlTagAccessor.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-HtmlTagAccessor.obj -MD -MP -MF src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo -c -o src/ficonic-HtmlTagAccessor.obj `if test -f 'src/HtmlTagAccessor.cpp'; then $(CYGPATH_W) 'src/HtmlTagAccessor.cpp'; else $(CYGPATH_W) '$(srcdir)/src/HtmlTagAccessor.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-HtmlTagAccessor.Tpo src/$(DEPDIR)/ficonic-HtmlTagAccessor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/HtmlTagAccessor.cpp' object='src/ficonic-HtmlTagAccessor.obj' libtool=no @AMDEPBACKSLASH@
+src/ficonic-PwaIconsRetriever.obj: src/PwaIconsRetriever.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/ficonic-PwaIconsRetriever.obj -MD -MP -MF src/$(DEPDIR)/ficonic-PwaIconsRetriever.Tpo -c -o src/ficonic-PwaIconsRetriever.obj `if test -f 'src/PwaIconsRetriever.cpp'; then $(CYGPATH_W) 'src/PwaIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PwaIconsRetriever.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/$(DEPDIR)/ficonic-PwaIconsRetriever.Tpo src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/PwaIconsRetriever.cpp' object='src/ficonic-PwaIconsRetriever.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-HtmlTagAccessor.obj `if test -f 'src/HtmlTagAccessor.cpp'; then $(CYGPATH_W) 'src/HtmlTagAccessor.cpp'; else $(CYGPATH_W) '$(srcdir)/src/HtmlTagAccessor.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-PwaIconsRetriever.obj `if test -f 'src/PwaIconsRetriever.cpp'; then $(CYGPATH_W) 'src/PwaIconsRetriever.cpp'; else $(CYGPATH_W) '$(srcdir)/src/PwaIconsRetriever.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -897,6 +939,8 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-Parser.Po
+	-rm -f src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po
@@ -952,6 +996,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/ficonic-IconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po
+	-rm -f src/$(DEPDIR)/ficonic-Parser.Po
+	-rm -f src/$(DEPDIR)/ficonic-PwaIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po
