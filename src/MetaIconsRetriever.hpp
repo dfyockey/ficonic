@@ -22,8 +22,8 @@
 #ifndef SRC_METAICONSRETRIEVER_HPP_
 #define SRC_METAICONSRETRIEVER_HPP_
 
-#include "IconsRetriever.hpp"
 #include "HtmlTagAccessor.hpp"
+#include "xercescpp/DOMParser.hpp"
 
 class MetaIconsRetriever : virtual private HtmlTagAccessor {
 private:
@@ -39,6 +39,8 @@ private:
 	};
 
 	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
+
+	DOMParser domParser;
 
 	void procTilesXML	(string url,  ficonvector& ficons);
 	void procIconTag	(nodeItr itr, ficonvector& ficons);

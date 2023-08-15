@@ -19,8 +19,9 @@
  * limitations under the License.
  */
 
-#include <src/xercescpp/XercesCPP.hpp>
 #include "MetaIconsRetriever.hpp"
+#include "xercescpp/InitXerces.hpp"
+#include "xercescpp/XmlStrTypes.hpp"
 #include <xercesc/util/XMLString.hpp>
 #include <iostream>
 
@@ -29,18 +30,20 @@
 void MetaIconsRetriever::procTilesXML (string url, ficonvector& ficons) {
 	// TODO: Get IE 11 Tiles for Win 8.1 Start Screen from xml file
 			try {
-				XercesCPP xercescpp;
+				InitXerces xercescpp;
 
 				// Get the .xml file
-				string tilesxml;
-				Curler::pull(url, tilesxml);
+//				string tilesxml;
+//				Curler::pull(url, tilesxml);
 
 				// TODO: Parse the .xml file into a DOM
+				domParser.parse(url);
 
 				// TODO: Retrieve icons referred to in the DOM
 
 			} catch (XMLException& e) {
-				std::cerr << url << " processing error : " << XMLString::transcode(e.getMessage()) << "\n" \
+				string msg = XmlStr(e.getMessage());
+				std::cerr << url << " processing error : " << msg << "\n" \
 						  << "(skipping file)\n" << std::endl;
 			}
 }

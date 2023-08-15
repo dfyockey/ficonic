@@ -1,5 +1,5 @@
 /*
- * XercesCPP.cpp
+ * InitXerces.hpp
  *
  *  Created on: Aug 10, 2023
  *      Author: David Yockey
@@ -19,26 +19,17 @@
  * limitations under the License.
  */
 
-#include "XercesCPP.hpp"
+#ifndef SRC_XERCESCPP_INITXERCES_HPP_
+#define SRC_XERCESCPP_INITXERCES_HPP_
 
-///// private ////////////////////////////////////////////////////////
+#include <xercesc/util/PlatformUtils.hpp>
 
-///// protected //////////////////////////////////////////////////////
+using namespace xercesc;
 
-///// public /////////////////////////////////////////////////////////
+class InitXerces {
+public:
+	inline   InitXerces() { XMLPlatformUtils::Initialize(); }
+	virtual ~InitXerces() { XMLPlatformUtils::Terminate();  }
+};
 
-XercesCPP::XercesCPP() {
-	try {
-		XMLPlatformUtils::Initialize();
-		initialized = true;
-	}
-	catch (const XMLException& e) {
-		initialized = false;
-		throw;
-	}
-}
-
-XercesCPP::~XercesCPP() {
-	if (initialized)
-		XMLPlatformUtils::Terminate();
-}
+#endif /* SRC_XERCESCPP_INITXERCES_HPP_ */

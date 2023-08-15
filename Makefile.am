@@ -19,13 +19,18 @@ ficonic_SOURCES = \
 	src/MetaIconsRetriever.hpp \
 	src/HtmlTagAccessor.cpp \
 	src/HtmlTagAccessor.hpp \
-	src/xerces/XercesCPP.cpp \
-	src/xerces/XercesCPP.hpp
+	src/xercescpp/InitXerces.hpp \
+	src/xercescpp/DOMParser.cpp \
+	src/xercescpp/DOMParser.hpp \
+	src/xercescpp/XmlStrTypes.hpp
 	
 ficonic_CPPFLAGS =	\
 	-I/usr/include/ImageMagick-6 \
-	-I/usr/include/htmlcxx/html \
-	-I/usr/include/xercesc
+	-I/usr/include/htmlcxx/html
+#	-I/usr/include/xercesc \
+#	-I/usr/include/xercesc/util
 
+## TODO: Add checks for the Magick++ and xerces-c libraries to configure.ac
 ficonic_LDFLAGS = \
-	`Magick++-config --cppflags --cxxflags --ldflags --libs`
+	`Magick++-config --cppflags --cxxflags --ldflags --libs` \
+	-lxerces-c

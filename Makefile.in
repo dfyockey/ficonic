@@ -111,7 +111,8 @@ am_ficonic_OBJECTS = src/ficonic-Curler.$(OBJEXT) \
 	src/ficonic-RootIconsRetriever.$(OBJEXT) \
 	src/ficonic-LinkIconsRetriever.$(OBJEXT) \
 	src/ficonic-MetaIconsRetriever.$(OBJEXT) \
-	src/ficonic-HtmlTagAccessor.$(OBJEXT)
+	src/ficonic-HtmlTagAccessor.$(OBJEXT) \
+	src/xercescpp/ficonic-DOMParser.$(OBJEXT)
 ficonic_OBJECTS = $(am_ficonic_OBJECTS)
 ficonic_LDADD = $(LDADD)
 ficonic_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(ficonic_LDFLAGS) \
@@ -137,7 +138,8 @@ am__depfiles_remade = src/$(DEPDIR)/ficonic-Curler.Po \
 	src/$(DEPDIR)/ficonic-LinkIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-MetaIconsRetriever.Po \
 	src/$(DEPDIR)/ficonic-RootIconsRetriever.Po \
-	src/$(DEPDIR)/ficonic-ficon.Po src/$(DEPDIR)/ficonic-main.Po
+	src/$(DEPDIR)/ficonic-ficon.Po src/$(DEPDIR)/ficonic-main.Po \
+	src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -336,14 +338,21 @@ ficonic_SOURCES = \
 	src/MetaIconsRetriever.cpp \
 	src/MetaIconsRetriever.hpp \
 	src/HtmlTagAccessor.cpp \
-	src/HtmlTagAccessor.hpp
+	src/HtmlTagAccessor.hpp \
+	src/xercescpp/InitXerces.hpp \
+	src/xercescpp/DOMParser.cpp \
+	src/xercescpp/DOMParser.hpp \
+	src/xercescpp/XmlStrTypes.hpp
 
 ficonic_CPPFLAGS = \
 	-I/usr/include/ImageMagick-6 \
 	-I/usr/include/htmlcxx/html
 
+#	-I/usr/include/xercesc \
+#	-I/usr/include/xercesc/util
 ficonic_LDFLAGS = \
-	`Magick++-config --cppflags --cxxflags --ldflags --libs`
+	`Magick++-config --cppflags --cxxflags --ldflags --libs` \
+	-lxerces-c
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -462,6 +471,15 @@ src/ficonic-MetaIconsRetriever.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 src/ficonic-HtmlTagAccessor.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
+src/xercescpp/$(am__dirstamp):
+	@$(MKDIR_P) src/xercescpp
+	@: > src/xercescpp/$(am__dirstamp)
+src/xercescpp/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/xercescpp/$(DEPDIR)
+	@: > src/xercescpp/$(DEPDIR)/$(am__dirstamp)
+src/xercescpp/ficonic-DOMParser.$(OBJEXT):  \
+	src/xercescpp/$(am__dirstamp) \
+	src/xercescpp/$(DEPDIR)/$(am__dirstamp)
 
 ficonic$(EXEEXT): $(ficonic_OBJECTS) $(ficonic_DEPENDENCIES) $(EXTRA_ficonic_DEPENDENCIES) 
 	@rm -f ficonic$(EXEEXT)
@@ -470,6 +488,7 @@ ficonic$(EXEEXT): $(ficonic_OBJECTS) $(ficonic_DEPENDENCIES) $(EXTRA_ficonic_DEP
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/*.$(OBJEXT)
+	-rm -f src/xercescpp/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -482,6 +501,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-RootIconsRetriever.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-ficon.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/ficonic-main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -616,6 +636,20 @@ src/ficonic-HtmlTagAccessor.obj: src/HtmlTagAccessor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/HtmlTagAccessor.cpp' object='src/ficonic-HtmlTagAccessor.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/ficonic-HtmlTagAccessor.obj `if test -f 'src/HtmlTagAccessor.cpp'; then $(CYGPATH_W) 'src/HtmlTagAccessor.cpp'; else $(CYGPATH_W) '$(srcdir)/src/HtmlTagAccessor.cpp'; fi`
+
+src/xercescpp/ficonic-DOMParser.o: src/xercescpp/DOMParser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/xercescpp/ficonic-DOMParser.o -MD -MP -MF src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Tpo -c -o src/xercescpp/ficonic-DOMParser.o `test -f 'src/xercescpp/DOMParser.cpp' || echo '$(srcdir)/'`src/xercescpp/DOMParser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Tpo src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/xercescpp/DOMParser.cpp' object='src/xercescpp/ficonic-DOMParser.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/xercescpp/ficonic-DOMParser.o `test -f 'src/xercescpp/DOMParser.cpp' || echo '$(srcdir)/'`src/xercescpp/DOMParser.cpp
+
+src/xercescpp/ficonic-DOMParser.obj: src/xercescpp/DOMParser.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT src/xercescpp/ficonic-DOMParser.obj -MD -MP -MF src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Tpo -c -o src/xercescpp/ficonic-DOMParser.obj `if test -f 'src/xercescpp/DOMParser.cpp'; then $(CYGPATH_W) 'src/xercescpp/DOMParser.cpp'; else $(CYGPATH_W) '$(srcdir)/src/xercescpp/DOMParser.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Tpo src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/xercescpp/DOMParser.cpp' object='src/xercescpp/ficonic-DOMParser.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(ficonic_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o src/xercescpp/ficonic-DOMParser.obj `if test -f 'src/xercescpp/DOMParser.cpp'; then $(CYGPATH_W) 'src/xercescpp/DOMParser.cpp'; else $(CYGPATH_W) '$(srcdir)/src/xercescpp/DOMParser.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -882,6 +916,8 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/$(am__dirstamp)
+	-rm -f src/xercescpp/$(DEPDIR)/$(am__dirstamp)
+	-rm -f src/xercescpp/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -900,6 +936,7 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po
+	-rm -f src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-tags
@@ -955,6 +992,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/ficonic-RootIconsRetriever.Po
 	-rm -f src/$(DEPDIR)/ficonic-ficon.Po
 	-rm -f src/$(DEPDIR)/ficonic-main.Po
+	-rm -f src/xercescpp/$(DEPDIR)/ficonic-DOMParser.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
