@@ -124,7 +124,7 @@ void IconsRetriever::push_ico_ficon(ostringstream& ossICO, string rel, formats f
 	ficons.push_back( ficonfactory::make_ficon(rel, format, size, blob) );
 }
 
-string save_ico_to_sys_temp(string ico_filename, ostringstream& ossICO) {
+string IconsRetriever::save_ico_to_sys_tmp (string ico_filename, ostringstream& ossICO) {
 	string		ico_file	( (temp_directory_path() / ico_filename).string() );
 	string		ico_str		( ossICO.str() );
 	ofstream	ofICO		( ico_file, std::ios::binary );
@@ -140,7 +140,7 @@ void IconsRetriever::pullICO(string url, string rel, ficonvector& ficons, string
 
 		// Saving an ICO format icon to a file is needed here because Magick::readImages in
 		// push_ico_img_ficons can't handle reading an ICO format file from a Magick::Blob.
-		string ico_file = save_ico_to_sys_temp(ico_filename, ossICO);
+		string ico_file = save_ico_to_sys_tmp (ico_filename, ossICO);
 		sizes size		= push_ico_img_ficons( ico_file, rel, ficons );
 
 		formats format = {"Microsoft Windows Icon","ICO"};

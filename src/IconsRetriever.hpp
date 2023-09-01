@@ -38,10 +38,10 @@ private:
 	string	finishURL	(string url);
 	void	pullImg		(string url, string rel, ficonvector& ficons);
 	void	pullImg		(string url, string rel, ficonvector& ficons, string filename);
-
 	void	saveLargerSize		(ficonvector& ficons, sizes& size);
 	sizes	push_ico_img_ficons	(string ICOfile, string rel, ficonvector& ficons);
 	void	push_ico_ficon		(ostringstream& ossICO, string rel, formats format, sizes size, ficonvector& ficons);
+	string	save_ico_to_sys_tmp (string ico_filename, ostringstream& ossICO);
 	void	pullICO				(string url, string rel, ficonvector& ficons, string filename);
 protected:
 	string	str_tolower			(string s);
