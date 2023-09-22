@@ -23,10 +23,13 @@
 #define SRC_METAICONSRETRIEVER_HPP_
 
 #include "HtmlTagAccessor.hpp"
+#include "xercescpp/InitXerces.hpp"
 #include "xercescpp/DOMParser.hpp"
 
 class MetaIconsRetriever : virtual private HtmlTagAccessor {
 private:
+	InitXerces xercescpp;
+
 	string html;
 
 	std::set<string> names = {
@@ -38,10 +41,42 @@ private:
 			"msapplication-config"
 	};
 
+	std::array<string, 3> nestedtags = {
+			"browserconfig",
+			"msapplication",
+			"tile"
+	};
+
+	std::set<string> nestedtiles = {
+			"square70x70logo",
+			"square150x150logo",
+			"wide310x150logo",
+			"square310x310logo",
+			"TileImage"
+	};
+
 	string pulledsite_url;	// may differ from url used in Curler pull call if 3xx redirection was performed
 
-	DOMParser domParser;
+	DOMParser parser;
 
+	struct StateMem {
+		bool tag;
+		bool slash;
+		bool nonspace;
+	} sm;
+
+	inline bool clrmem(StateMem& sm) {
+		sm.tag      = false;
+		sm.slash    = false;
+		sm.nonspace = false;
+		return false;	// facilitates use of method in a ?: statement
+	}
+
+//	string getRootFromUrl (string url);
+	string getFilenameFromUrl (string url, size_t filename_start);
+//	DOMElement* getTileElement (DOMElement* domElement, int index=0);
+	void procTileChildNodes (DOMNodeList* childNodes, ficonvector& ficons);
+	void procTilesXMLfile (string tilesxmlfile, ficonvector& ficons);
 	void procTilesXML	(string url,  ficonvector& ficons);
 	void procIconTag	(nodeItr itr, ficonvector& ficons);
 

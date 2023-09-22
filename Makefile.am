@@ -22,13 +22,14 @@ ficonic_SOURCES = \
 	src/xercescpp/InitXerces.hpp \
 	src/xercescpp/DOMParser.cpp \
 	src/xercescpp/DOMParser.hpp \
-	src/xercescpp/XmlStrTypes.hpp
+	src/xercescpp/xerstr.cpp \
+	src/xercescpp/xerstr.hpp
 	
 ficonic_CPPFLAGS =	\
 	-I/usr/include/ImageMagick-6 \
-	-I/usr/include/htmlcxx/html
-#	-I/usr/include/xercesc \
-#	-I/usr/include/xercesc/util
+	-I/usr/include/htmlcxx/html \
+	-I/usr/include/xercesc \
+	-I/usr/include/xercesc/util
 
 ## TODO: Add checks for the Magick++ and xerces-c libraries to configure.ac
 ficonic_LDFLAGS = \
