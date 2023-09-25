@@ -20,7 +20,6 @@
  */
 
 #include "MetaIconsRetriever.hpp"
-//#include "xercescpp/XmlStrTypes.hpp"
 #include "xercescpp/xerstr.hpp"
 #include <iostream>
 #include <filesystem>
@@ -76,8 +75,8 @@ void MetaIconsRetriever::procTileChildNodes (DOMNodeList* childNodes, ficonvecto
 		for (int c = childNodes->getLength(), i = 0; i < c; i++) {
 			DOMElement* childElement = static_cast<DOMElement*>(childNodes->item(i));
 
-			if ( childElement && nestedtiles.find( x_xerstr(childElement->getTagName()).s_str() ) != nestedtiles.end() ) {
-				x_xerstr imgfile( childElement->getAttribute(s_xerstr("src")) );
+			if ( childElement && nestedtiles.find( xerstr(childElement->getTagName()).s_str() ) != nestedtiles.end() ) {
+				xerstr imgfile( childElement->getAttribute(xerstr("src")) );
 				string imgurl = pulledsite_url + clipLeadingSlash(imgfile);
 				//fauxPullIcon(imgurl);
 				pullIcon(imgurl, "msapplication", ficons);
@@ -89,7 +88,7 @@ void MetaIconsRetriever::procTileChildNodes (DOMNodeList* childNodes, ficonvecto
 void MetaIconsRetriever::procTilesXMLfile (string tilesxmlfile, ficonvector& ficons) {
 	parser.parse(tilesxmlfile);
 	DOMDocument* doc = parser.getDocument();
-	DOMNodeList* tiletags = doc->getElementsByTagName(s_xerstr("tile"));
+	DOMNodeList* tiletags = doc->getElementsByTagName(xerstr("tile"));
 
 	if (tiletags && tiletags->getLength() > 0) {
 
@@ -239,11 +238,11 @@ void MetaIconsRetriever::procTilesXML (string tilesxmlurl, ficonvector& ficons) 
 //				}
 
 			} catch (XMLException& e) {
-				string msg = x_xerstr(e.getMessage());
+				string msg = xerstr(e.getMessage());
 				std::cerr << tilesxmlurl << " : XMLException : " << msg << "\n" \
 				          << "(skipping file)\n" << std::endl;
 			} catch (SAXParseException &e) {
-				string msg = x_xerstr(e.getMessage());
+				string msg = xerstr(e.getMessage());
 				std::cerr << tilesxmlurl << " : SAXParseException : " << msg << "\n" \
 				          << "(skipping file)\n" << std::endl;
 			} catch (std::exception &e) {

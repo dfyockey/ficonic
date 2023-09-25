@@ -28,48 +28,38 @@
 
 using std::string;
 
-// (1)
+// 1)
 class xerstr {
 private:
 	InitXerces xercescpp;
+
 	const bool clean_x = true;
 	const bool clean_c = false;
 	bool cleanup = true;
-	string s;
-	XMLCh* x = 0;
-	char*  c = 0;
-protected:
-	void setfromXMLCh	(const XMLCh* txt);
-	void setfromString	(string txt);
-public:
-//	xerstr(string txt);
-//	xerstr(char* txt);
 
-	xerstr();
+	string s;
+	XMLCh* x;
+	char*  c;
+
+	void setfromXMLCh	(const XMLCh* txt);
+	void setfromString	(const string txt);
+
+public:
+	xerstr(const XMLCh* txt) { setfromXMLCh(txt);  }
+	xerstr(const string txt) { setfromString(txt); };
+
 	virtual ~xerstr();
 
-	operator      string() { return s; }
-	operator      XMLCh*() { return x; }
-	operator const char*() { return c; }
+	operator const string() { return s; }
+	operator const XMLCh*() { return x; }
+	operator const char* () { return c; }
 
-	string      s_str() { return s; }
-	XMLCh*      x_str() { return x; }
-	const char* c_str() { return c; }
+	const string s_str() { return s; }
+	const XMLCh* x_str() { return x; }
+	const char*  c_str() { return c; }
 
-	std::ostream& operator<<(std::ostream& os) { return os << s; }
+	// 2)
 };
-
-class x_xerstr : public xerstr {
-public:
-	x_xerstr(const XMLCh* txt) : xerstr() { setfromXMLCh(txt); }
-};
-
-class s_xerstr : public xerstr {
-public:
-	s_xerstr(string txt) : xerstr() { setfromString(txt); }
-};
-
-//std::ostream& operator<<(std::ostream& os, xerstr& xs) { return os << xs.s_str(); }
 
 #endif /* SRC_XERCESCPP_XERSTR_HPP_ */
 
@@ -77,3 +67,6 @@ public:
 //    That's because it would require either transcoding every time the Xerces string was accessed
 //    or significant complexity so the std::string and Xerces string are kept in sync and so the latter
 //    is released before the std::string was changed and at class destruction.
+// 2) Apparently, the stream operator '<<' can't be overloaded because C++ can't determine whether it
+//    or one of the other operators (string, XMLCh*, or char*) should be applied when an xerstr is
+//    provided as an argument to '<<' in, say, a std::cout stream.

@@ -7,7 +7,6 @@
  */
 
 #include "DOMParser.hpp"
-//#include "XmlStrTypes.hpp"
 //#include "xerstr.hpp"
 #include <iostream>
 
