@@ -49,12 +49,9 @@ void HtmlTagAccessor::getIconTags(string tagtype, ficonic::ficonvector& ficons) 
 ///// public /////////////////////////////////////////////////////////
 
 HtmlTagAccessor::HtmlTagAccessor() : IconsRetriever() {
-	// TODO Auto-generated constructor stub
-
 }
 
 HtmlTagAccessor::~HtmlTagAccessor() {
-	// TODO Auto-generated destructor stub
 }
 
 void HtmlTagAccessor::pull(string url, string& htmlref) {

@@ -45,9 +45,6 @@ string IconsRetriever::finishURL(string url) {
 	if( noHttpProtocol(url) ) {
 		url = clipLeadingSlash(url);
 	}
-
-/**/std::cout << "finished URL = " << url << std::endl;
-
 	return url;
 }
 
@@ -66,7 +63,7 @@ string IconsRetriever::str_tolower(string s)
 }
 
 string IconsRetriever::getExt(string file) {
-	// FIXME: file.substr should get the string from last '.' to end of file
+	// FIXME: file.substr should get the string from last '.' to end of string file
 	string ext = file.substr(file.length()-4,4);
 	return str_tolower(ext);
 }
@@ -74,7 +71,6 @@ string IconsRetriever::getExt(string file) {
 void IconsRetriever::pullImg(string url, string rel, ficonvector& ficons) {
 	try {
 		url = finishURL(url);
-/**/	std::cout << "Pulling Img " << url << std::endl;
 		ostringstream ossLinkIcon;
 		Curler::pull( url , ossLinkIcon );
 		Blob blob(ossLinkIcon.str().data(), ossLinkIcon.str().length());
@@ -100,7 +96,7 @@ void IconsRetriever::saveLargerSize(ficonvector& ficons, sizes& size) {
 
 sizes IconsRetriever::push_ico_img_ficons(string ICOfile, string rel, ficonvector& ficons) {
 
-	///// Pull the favicon.ico file, spliting it into its contained images in the process.
+	///// Pull the favicon.ico file, splitting it into its contained images in the process.
 	vector<Image> imgvector;
 	readImages( &imgvector, ICOfile );
 

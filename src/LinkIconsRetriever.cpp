@@ -20,11 +20,6 @@
  */
 
 #include "LinkIconsRetriever.hpp"
-#include <iostream>
-
-using std::cout;
-using std::endl;
-using std::flush;
 
 ///// private ////////////////////////////////////////////////////////
 
@@ -51,7 +46,6 @@ LinkIconsRetriever::LinkIconsRetriever() : HtmlTagAccessor() {
 void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
 	HtmlTagAccessor::pull(url, html);
 
-/**/cout << "Effective URL = " << Curler::effective_url() << endl;
 	pulledsite_url = Curler::effective_url();
 
 	getIconTags("link", ficons);
@@ -59,4 +53,3 @@ void LinkIconsRetriever::pull(string url, ficonic::ficonvector& ficons) {
 
 LinkIconsRetriever::~LinkIconsRetriever() {
 }
-

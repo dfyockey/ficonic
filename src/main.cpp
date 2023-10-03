@@ -34,8 +34,6 @@
 using namespace Magick;
 
 using std::string;
-using std::cout;
-using std::endl;
 using std::to_string;
 
 namespace fs = std::filesystem;

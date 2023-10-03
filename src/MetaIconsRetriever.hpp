@@ -72,9 +72,7 @@ private:
 		return false;	// facilitates use of method in a ?: statement
 	}
 
-//	string getRootFromUrl (string url);
 	string getFilenameFromUrl (string url, size_t filename_start);
-//	DOMElement* getTileElement (DOMElement* domElement, int index=0);
 	void procTileChildNodes (DOMNodeList* childNodes, ficonvector& ficons);
 	void procTilesXMLfile (string tilesxmlfile, ficonvector& ficons);
 	void procTilesXML	(string url,  ficonvector& ficons);
